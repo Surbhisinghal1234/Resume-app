@@ -70,7 +70,7 @@ export const getSingleResume = async (req, res) => {
 export const updateResume = async (req, res) => {
   try {
     const resume = await Resume.findOneAndUpdate(
-      { _id: req.params.id, user: req.user._id },
+      { _id: req.params.id, userId: req.user._id },
       req.body,
       { new: true }
     );
@@ -88,9 +88,11 @@ export const updateResume = async (req, res) => {
 // DELETE /api/resume/:id
 export const deleteResume = async (req, res) => {
   try {
+      console.log("REQ.USER:", req.user._id);
+    console.log("PARAM ID:", req.params.id);
     const deleted = await Resume.findOneAndDelete({
       _id: req.params.id,
-      user: req.user._id,
+      userId: req.user._id,
     });
 
     if (!deleted) {

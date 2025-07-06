@@ -9,13 +9,13 @@ const ThemePreview = ({ theme }) => {
 
   const renderTheme = () => {
     switch (theme) {
-      case "theme1":
+      case "Theme1":
         return <Theme1 resume={resume} />;
-      case "theme2":
+      case "Theme2":
         return <Theme2 resume={resume} />;
-      case "theme3":
+      case "Theme3":
         return <Theme3 resume={resume} />;
-      case "theme4":
+      case "Theme4":
         return <Theme4 resume={resume} />;
       default:
         return <div>No theme selected</div>;

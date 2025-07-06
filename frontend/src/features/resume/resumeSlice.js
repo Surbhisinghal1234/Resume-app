@@ -1,9 +1,9 @@
-import { createSlice, nanoid } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   step: 1,
   selectedTheme: null,
-  resumeList: [],
+  resumeList: [], 
   currentResume: {
     id: null,
     basicInfo: {
@@ -40,8 +40,8 @@ const initialState = {
       soft: [],
     },
     others: {
-      hobbies: [""],
-      languages: [""],
+      hobbies: [],
+      languages: [],
     },
   },
   isEdit: false,
@@ -51,14 +51,7 @@ const resumeSlice = createSlice({
   name: "resume",
   initialState,
   reducers: {
-    setTheme(state, action) {
-      state.selectedTheme = action.payload;
-    },
-
-    updateField(state, action) {
-      const { section, value } = action.payload;
-      state.currentResume[section] = value;
-    },
+    // Step control
     nextStep(state) {
       if (state.step < 6) state.step++;
     },
@@ -68,96 +61,98 @@ const resumeSlice = createSlice({
     setStep(state, action) {
       state.step = action.payload;
     },
-    addResume(state) {
+
+    // Field update
+    updateField(state, action) {
+      const { section, value } = action.payload;
+      state.currentResume[section] = value;
+    },
+
+    // Theme select
+    setTheme(state, action) {
+      state.selectedTheme = action.payload;
+    },
+setIsEdit: (state, action) => {
+  state.isEdit = action.payload;
+},
+    //  Add new resume to list
+    addResume(state, action) {
       const newResume = {
-        ...state.currentResume,
-        id: nanoid(),
-        theme: state.selectedTheme,
+        ...action.payload,
+        id: action.payload.id || crypto.randomUUID(),
       };
       state.resumeList.push(newResume);
-      state.currentResume = JSON.parse(
-        JSON.stringify(initialState.currentResume)
-      );
-      state.step = 1;
-      state.selectedTheme = null;
     },
-    deleteResume(state, action) {
-      state.resumeList = state.resumeList.filter(
-        (r) => r.id !== action.payload
-      );
-    },
-    // editResume(state, action) {
-    //   const resume = state.resumeList.find((r) => r.id === action.payload);
-    //   if (resume) {
-    //     state.currentResume = JSON.parse(JSON.stringify(resume));
-    //     state.selectedTheme = resume.theme;
-    //     state.step = 1;
-    //     state.isEdit = true;
-    //   }
-    // },
-//    editResume: (state, action) => {
-//   const resume = action.payload;
-//   return {
-//     ...state,
-//     step: 1,
-//     selectedTheme: resume.theme || null,
-//     basicInfo: resume.basicInfo,
-//     workExperience: resume.workExperience,
-//     education: resume.qualification,
-//     certification: resume.certification,
-//     skills: resume.skills,
-//     others: resume.others,
-//     summary: { text: resume.summary || "" },
-//     id: resume._id || null,
-//   };
-// }
-editResume: (state, action) => {
-  const resume = action.payload;
 
-  return {
-    ...state,
-    step: 1, // force go to step 1
-    selectedTheme: resume.theme || "Theme1", 
-    basicInfo: resume.basicInfo || {},
-    workExperience: resume.workExperience || [],
-    qualification: resume.qualification || [],
-    certification: resume.certification || [],
-    skills: resume.skills || { technical: [], soft: [] },
-    others: resume.others || { hobbies: [], languages: [] },
-    summary: resume.summary || { text: "" },
-  };
-}
-,
-    updateResume(state) {
+    // Load a resume for editing
+    loadResumeForEdit(state, action) {
+      const resume = action.payload;
+
+      state.currentResume = {
+        id: resume._id || resume.id || null,
+        basicInfo: resume.basicInfo || {},
+        workExperience: resume.workExperience || [],
+        qualification: resume.qualification || [],
+        certification: resume.certification || [],
+        skills: resume.skills || { technical: [], soft: [] },
+        others: resume.others || { hobbies: [], languages: [] },
+      };
+
+      state.selectedTheme = resume.theme || "Theme1";
+      state.step = 1;
+      state.isEdit = true;
+    },
+
+    // Update an existing resume
+    updateResume(state, action) {
+      const updated = action.payload;
       const index = state.resumeList.findIndex(
-        (r) => r.id === state.currentResume.id
+        (r) => r.id === updated.id
       );
       if (index !== -1) {
         state.resumeList[index] = {
-          ...state.currentResume,
-          theme: state.selectedTheme,
+          ...updated,
         };
-        state.isEdit = false;
-        state.step = 1;
-        state.currentResume = JSON.parse(
-          JSON.stringify(initialState.currentResume)
-        );
-        state.selectedTheme = null;
       }
+
+      state.isEdit = false;
+      state.step = 1;
+      state.currentResume = JSON.parse(
+        JSON.stringify(initialState.currentResume)
+      );
+      state.selectedTheme = null;
+    },
+
+    //  Delete resume
+    deleteResume(state, action) {
+      const id = action.payload;
+      state.resumeList = state.resumeList.filter((r) => r.id !== id);
+    },
+
+    // Reset form
+    resetForm(state) {
+      state.currentResume = JSON.parse(
+        JSON.stringify(initialState.currentResume)
+      );
+      state.selectedTheme = null;
+      state.step = 1;
+      state.isEdit = false;
     },
   },
 });
 
 export const {
-  setTheme,
+  setStep,
   nextStep,
   prevStep,
-  setStep,
   updateField,
+  setTheme,
   addResume,
-  deleteResume,
-  editResume,
   updateResume,
+  deleteResume,
+  loadResumeForEdit,
+  resetForm,
+  setIsEdit
 } = resumeSlice.actions;
 
 export default resumeSlice.reducer;

@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { updateField, nextStep } from "../../features/resume/resumeSlice";
+import { updateField } from "../../features/resume/resumeSlice";
 import { useEffect } from "react";
 
 const CertificationForm = () => {
@@ -44,9 +44,6 @@ const CertificationForm = () => {
     dispatch(updateField({ section: "certification", value: updated }));
   };
 
-  const handleNext = () => {
-    dispatch(nextStep());
-  };
 
   return (
     <div className="space-y-4">
@@ -90,14 +87,7 @@ const CertificationForm = () => {
         + Add More
       </button>
 
-      <div className="text-right mt-10">
-        <button
-          onClick={handleNext}
-           className="bg-gradient-to-r  from-purple-600 to-pink-600 text-white px-4 py-2 rounded"
-        >
-          Next
-        </button>
-      </div>
+      
     </div>
   );
 };

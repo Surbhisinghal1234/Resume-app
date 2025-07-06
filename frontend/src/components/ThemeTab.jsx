@@ -4,23 +4,21 @@ import ThemePreview from "./ThemePreview";
 import { useEffect } from "react";
 
 const themes = [
-  { id: "theme1", label: "Classic", img: "/themes/theme1.png" },
-  { id: "theme2", label: "Modern", img: "/themes/theme2.png" },
-  { id: "theme3", label: "Elegant ", img: "/themes/theme3.png" },
-  { id: "theme4", label: "Bright ", img: "/themes/theme4.png" },
+  { id: "Theme1", label: "Classic", img: "/themes/theme1.png" },
+  { id: "Theme2", label: "Modern", img: "/themes/theme2.png" },
+  { id: "Theme3", label: "Elegant", img: "/themes/theme3.png" },
+  { id: "Theme4", label: "Bright", img: "/themes/theme4.png" },
 ];
-
 const ThemeTab = () => {
   const dispatch = useDispatch();
   const selected = useSelector((state) => state.resume.selectedTheme);
 
-// Set default theme on first render
-
-  useEffect(() => {
-    if (!selected) {
-      dispatch(setTheme("theme1"));
-    }
-  }, [selected, dispatch]);
+//  default theme on first render
+useEffect(() => {
+  if (!selected) {
+    dispatch(setTheme("Theme1")); 
+  }
+}, [selected, dispatch]);
   const handleSelect = (themeId) => {
     dispatch(setTheme(themeId));
   };

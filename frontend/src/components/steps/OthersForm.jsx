@@ -1,30 +1,25 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateField } from "../../features/resume/resumeSlice";
-import { useSubmitResumeMutation } from "../../features/resume/resumeApi";
 
 const OthersForm = () => {
   const dispatch = useDispatch();
   const others = useSelector((state) => state.resume.currentResume.others);
-  const fullResume = useSelector((state) => state.resume.currentResume);
-
-  const [submitResume, { isLoading, isSuccess, isError }] =
-    useSubmitResumeMutation();
 
   const [inputValues, setInputValues] = useState({
     hobbies: "",
     languages: "",
   });
 
-  //  Ensure others always has arrays
+  // 'others' has default array values
   useEffect(() => {
-    if (!others.hobbies || !others.languages) {
+    if (!others?.hobbies || !others?.languages) {
       dispatch(
         updateField({
           section: "others",
           value: {
-            hobbies: others.hobbies || [],
-            languages: others.languages || [],
+            hobbies: others?.hobbies || [],
+            languages: others?.languages || [],
           },
         })
       );
@@ -42,6 +37,7 @@ const OthersForm = () => {
     if (e.key === "Enter" && inputValues[type].trim()) {
       e.preventDefault();
       const newValue = inputValues[type].trim();
+
       if (!others[type].includes(newValue)) {
         const updated = {
           ...others,
@@ -49,6 +45,7 @@ const OthersForm = () => {
         };
         dispatch(updateField({ section: "others", value: updated }));
       }
+
       setInputValues((prev) => ({
         ...prev,
         [type]: "",
@@ -62,17 +59,6 @@ const OthersForm = () => {
       [type]: others[type].filter((_, i) => i !== index),
     };
     dispatch(updateField({ section: "others", value: updated }));
-  };
-
-  const handleSubmit = async () => {
-    try {
-      const result = await submitResume(fullResume).unwrap();
-      console.log("Submitted Successfully:", result);
-      alert("Resume submitted successfully!");
-    } catch (err) {
-      console.error("Submit error:", err);
-      alert("Error submitting resume.");
-    }
   };
 
   const renderTags = (type) => (
@@ -129,25 +115,6 @@ const OthersForm = () => {
              focus:border-[2px] focus:border-purple-500  focus:outline-[1.5px] focus:outline-black mt-2"
         />
       </div>
-
-      {/* Submit Button */}
-      <div>
-        <button
-          onClick={handleSubmit}
-          className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-4 py-2 rounded"
-          disabled={isLoading}
-        >
-          {isLoading ? "Submitting..." : "Submit"}
-        </button>
-      </div>
-
-      {/* Messages */}
-      {isError && (
-        <p className="text-red-600"> Failed to submit. Please try again.</p>
-      )}
-      {isSuccess && (
-        <p className="text-green-600"> Resume submitted successfully!</p>
-      )}
     </div>
   );
 };

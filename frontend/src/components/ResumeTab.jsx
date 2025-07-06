@@ -1,55 +1,49 @@
 import React, { useRef } from "react";
-import {
-  useGetResumesQuery,
-  useDeleteResumeMutation,
-} from "../features/resume/resumeApi";
 import { useDispatch } from "react-redux";
-import { editResume } from "../features/resume/resumeSlice";
-import { useNavigate } from "react-router-dom";
 import { MdEdit, MdDelete, MdDownload } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
+import { useGetResumesQuery, useDeleteResumeMutation } from "../features/resume/resumeApi";
+import { updateResume, setStep, setIsEdit } from "../features/resume/resumeSlice";
 import { useReactToPrint } from "react-to-print";
-
-// Import all themes
 import Theme1 from "./themes/Theme1";
 import Theme2 from "./themes/Theme2";
 import Theme3 from "./themes/Theme3";
 import Theme4 from "./themes/Theme4";
 
 const ResumeTab = () => {
-  const { data: resumes, isLoading, isError } = useGetResumesQuery();
-  const [deleteResume] = useDeleteResumeMutation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { data: resumes = [], isLoading, error } = useGetResumesQuery();
+  const [deleteResume] = useDeleteResumeMutation();
 
- 
-  const printRefs = useRef([]);
+  const componentRef = useRef({});
 
-  const handleEdit = (resume) => {
-    dispatch(editResume(resume)); 
-    navigate("/create-resume?edit=true"); 
-  };
+  const handlePrint = useReactToPrint({
+    content: () => componentRef.current,
+    documentTitle: "My_Resume",
+  });
 
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete this resume?")) {
       try {
         await deleteResume(id).unwrap();
-        alert("Resume deleted successfully");
-      } catch (error) {
+        alert("Resume deleted");
+      } catch (err) {
+        console.error(err);
         alert("Failed to delete resume");
       }
     }
   };
 
-  const handleDownload = (index) => {
-    const print = useReactToPrint({
-      content: () => printRefs.current[index],
-      documentTitle: "Resume",
-    });
-    print();
+  const handleEdit = (resume) => {
+    dispatch(updateResume({ ...resume, id: resume._id }));
+    dispatch(setIsEdit(true));
+    dispatch(setStep(1));
+    navigate("/create-resume", { state: { tab: "form" } });
   };
 
-  const renderTheme = (themeName, resume) => {
-    switch (themeName) {
+  const renderTheme = (resume) => {
+    switch (resume.theme) {
       case "Theme1":
         return <Theme1 resume={resume} />;
       case "Theme2":
@@ -63,9 +57,8 @@ const ResumeTab = () => {
     }
   };
 
-  if (isLoading) return <div>Loading...</div>;
-  if (isError) return <div className="text-red-500">Failed to load resumes.</div>;
-  if (!resumes || resumes.length === 0) return <div>No resumes found.</div>;
+  if (isLoading) return <p>Loading resumes...</p>;
+  if (error) return <p>Error loading resumes</p>;
 
   return (
     <div className="p-6 space-y-6">
@@ -91,29 +84,32 @@ const ResumeTab = () => {
             <MdDownload
               className="text-green-600 cursor-pointer hover:scale-110"
               size={22}
-              onClick={() => handleDownload(i)}
+              onClick={() => {
+                componentRef.current = document.getElementById(`resume-${resume._id}`);
+                setTimeout(() => handlePrint(), 100);
+              }}
             />
           </div>
 
-          {/* Hidden PDF Preview for Download */}
-          <div style={{ display: "none" }}>
-            <div ref={(el) => (printRefs.current[i] = el)}>
-              {renderTheme(resume.theme, resume)}
+          {/* Hidden Preview for Download */}
+          <div className="hidden">
+            <div id={`resume-${resume._id}`} ref={(el) => (componentRef.current = el)}>
+              {renderTheme(resume)}
             </div>
           </div>
 
-          {/* Resume Summary */}
+          {/* Resume Summary Preview */}
           <div className="mt-2">
             <h4 className="font-semibold mb-1">Basic Info</h4>
-            <p>Name: {resume.basicInfo.name}</p>
-            <p>Email: {resume.basicInfo.email}</p>
-            <p>Mobile: {resume.basicInfo.mobile}</p>
-            <p>Location: {resume.basicInfo.location}</p>
+            <p>Name: {resume.basicInfo?.name}</p>
+            <p>Email: {resume.basicInfo?.email}</p>
+            <p>Mobile: {resume.basicInfo?.mobile}</p>
+            <p>Location: {resume.basicInfo?.location}</p>
           </div>
 
           <div className="mt-4">
             <h4 className="font-semibold">Work Experience</h4>
-            {resume.workExperience.map((exp, idx) => (
+            {resume.workExperience?.map((exp, idx) => (
               <div key={idx} className="ml-4 mb-1">
                 <p>Company: {exp.company}</p>
                 <p>Position: {exp.position}</p>
@@ -125,7 +121,7 @@ const ResumeTab = () => {
 
           <div className="mt-4">
             <h4 className="font-semibold">Education</h4>
-            {resume.qualification.map((q, idx) => (
+            {resume.qualification?.map((q, idx) => (
               <div key={idx} className="ml-4 mb-1">
                 <p>Degree: {q.degree}</p>
                 <p>Institution: {q.institution}</p>
@@ -136,7 +132,7 @@ const ResumeTab = () => {
 
           <div className="mt-4">
             <h4 className="font-semibold">Certifications</h4>
-            {resume.certification.map((cert, idx) => (
+            {resume.certification?.map((cert, idx) => (
               <div key={idx} className="ml-4 mb-1">
                 <p>Title: {cert.title}</p>
                 <p>Authority: {cert.authority}</p>
@@ -147,14 +143,14 @@ const ResumeTab = () => {
 
           <div className="mt-4">
             <h4 className="font-semibold">Skills</h4>
-            <p>Technical: {resume.skills.technical.join(", ")}</p>
-            <p>Soft: {resume.skills.soft.join(", ")}</p>
+            <p>Technical: {resume.skills?.technical?.join(", ")}</p>
+            <p>Soft: {resume.skills?.soft?.join(", ")}</p>
           </div>
 
           <div className="mt-4">
             <h4 className="font-semibold">Others</h4>
-            <p>Hobbies: {resume.others.hobbies.join(", ")}</p>
-            <p>Languages: {resume.others.languages.join(", ")}</p>
+            <p>Hobbies: {resume.others?.hobbies?.join(", ")}</p>
+            <p>Languages: {resume.others?.languages?.join(", ")}</p>
           </div>
         </div>
       ))}

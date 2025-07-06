@@ -1,46 +1,77 @@
-import { useSelector, useDispatch } from "react-redux";
-import BasicInfoForm from "../components/steps/BasicInfoForm";
-import WorkExperienceForm from "../components/steps/WorkExperienceForm";
-import CertificationForm from "../components/steps/CertificationForm";
-import SkillsForm from "../components/steps/SkillsForm";
-import OthersForm from "../components/steps/OthersForm";
-import QualificationForm from "./steps/QualificationForm";
-import { setStep } from "../features/resume/resumeSlice"; 
-import ThemePreview from "./ThemePreview";
 import { useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useReactToPrint } from "react-to-print";
+import {
+  nextStep,
+  prevStep,
+  setStep,
+  resetForm,
+  addResume,
+  updateResume as updateResumeInStore,
+} from "../features/resume/resumeSlice";
+import {
+  useAddResumeMutation,
+  useUpdateResumeMutation,
+} from "../features/resume/resumeApi";
+
+// Form Steps
+import BasicInfoForm from "./steps/BasicInfoForm";
+import WorkExperienceForm from "./steps/WorkExperienceForm";
+import QualificationForm from "./steps/QualificationForm";
+import CertificationForm from "./steps/CertificationForm";
+import SkillsForm from "./steps/SkillsForm";
+import OthersForm from "./steps/OthersForm";
+
+// Themes
+import Theme1 from "./themes/Theme1";
+import Theme2 from "./themes/Theme2";
+import Theme3 from "./themes/Theme3";
+import Theme4 from "./themes/Theme4";
 
 const FormTab = () => {
   const dispatch = useDispatch();
   const step = useSelector((state) => state.resume.step);
+  const currentResume = useSelector((state) => state.resume.currentResume);
   const selectedTheme = useSelector((state) => state.resume.selectedTheme);
+  const isEdit = useSelector((state) => state.resume.isEdit);
 
+  const [addResumeApi] = useAddResumeMutation();
+  const [updateResumeApi] = useUpdateResumeMutation();
+
+  // For PDF download
   const componentRef = useRef();
   const handlePrint = useReactToPrint({
-    contentRef: componentRef,
-    documentTitle: "Resume",
+    contentRef:  componentRef,
+    documentTitle: "My_Resume",
   });
 
-  // Mapping Redux step to tab key and vice-versa
-  const stepToTabKey = {
-    1: "basic",
-    2: "work",
-    3: "qualification",
-    4: "certification",
-    5: "skills",
-    6: "others",
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const payload = {
+      ...currentResume,
+      theme: selectedTheme,
+    };
+
+    try {
+      if (isEdit && currentResume.id) {
+        await updateResumeApi({ id: currentResume.id, updatedData: payload });
+        dispatch(updateResumeInStore(payload));
+        alert("Resume updated successfully!");
+      } else {
+        const response = await addResumeApi(payload).unwrap();
+        dispatch(addResume(response));
+        alert("Resume created successfully!");
+      }
+
+      dispatch(resetForm());
+    } catch (error) {
+      console.error("Submission error:", error);
+      alert("Something went wrong. Please try again.");
+    }
   };
 
-  const tabKeyToStep = {
-    basic: 1,
-    work: 2,
-    qualification: 3,
-    certification: 4,
-    skills: 5,
-    others: 6,
-  };
-
-  const renderSubTabContent = () => {
+  const renderStep = () => {
     switch (step) {
       case 1:
         return <BasicInfoForm />;
@@ -55,68 +86,114 @@ const FormTab = () => {
       case 6:
         return <OthersForm />;
       default:
-        return <div>Select a section</div>;
+        return <BasicInfoForm />;
     }
   };
 
-  return (
-    <>
-      {/* Tab buttons */}
-      <div className="mt-6 mx-auto w-5xl shadow-purple-500/20 border-0 mb-[2rem] p-4 rounded-xl flex gap-4 justify-center  bg-white/30 backdrop-blur-lg transition-all duration-500 transform hover:-translate-y-1 shadow-[0_10px_20px_rgba(168,85,247,0.3),_0_6px_6px_rgba(168,85,247,0.3)] hover:shadow-[0_20px_25px_rgba(168,85,247,0.4),_0_10px_10px_rgba(168,85,247,0.3)]">
-        {[
-          { key: "basic", label: "Basic Info" },
-          { key: "work", label: "Work Experience" },
-          { key: "qualification", label: "Qualification" },
-          { key: "certification", label: "Certification" },
-          { key: "skills", label: "Skills" },
-          { key: "others", label: "Others" },
-        ].map((tab) => (
-          <button
-            key={tab.key}
-            onClick={() => dispatch(setStep(tabKeyToStep[tab.key]))}
-            className={`px-4 py-2 rounded font-semibold transition-all duration-300 ${
-              stepToTabKey[step] === tab.key
-                ? "bg-gradient-to-r from-purple-600 to-pink-600 text-white"
-                : "bg-gray-100 shadow-md hover:shadow-lg"
-            }`}
-          >
-            {tab.label}
-          </button>
-        ))}
-      </div>
-      <div className="flex justify-between gap-4 ">
-        {/* Left side: Form and tabs */}
-       
-          {/* Form content */}
-          <div className=" mx-auto w-full shadow-2xl border border-gray-300 shadow-purple-500/20  bg-white/80 backdrop-blur-lg hover:shadow-3xl transition-all duration-500 transform hover:-translate-y-1 p-4 rounded-xl">
-            {renderSubTabContent()}
+  const renderThemePreview = () => {
+    switch (selectedTheme) {
+      case "Theme1":
+        return <Theme1 />;
+      case "Theme2":
+        return <Theme2 />;
+      case "Theme3":
+        return <Theme3 />;
+      case "Theme4":
+        return <Theme4 />;
+      default:
+        return (
+          <div className="text-gray-500 text-center mt-10">
+            Please select a theme to preview your resume.
           </div>
-       
+        );
+    }
+  };
 
-        {/* Right side: Preview */}
-        <div className=" ">
-          {selectedTheme ? (
-            <>
-              <div className="mb-4 text-right">
-                <button
-                  onClick={handlePrint}
-                  className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-4 py-2 rounded  "
-                >
-                  Download PDF
-                </button>
-              </div>
-              <div ref={componentRef}>
-                <ThemePreview theme={selectedTheme} />
-              </div>
-            </>
+  const steps = [
+    "Basic Info",
+    "Work Experience",
+    "Qualification",
+    "Certifications",
+    "Skills",
+    "Others",
+  ];
+
+  return (
+    <div className="flex flex-col lg:flex-row gap-10">
+      {/* Left: Form Area */}
+      <form
+        onSubmit={handleSubmit}
+        className="w-full lg:w-1/2 space-y-6 border-r pr-4"
+      >
+        {/* Step Navigation Buttons */}
+        <div className="flex flex-wrap justify-between gap-2 bg-purple-100 p-3 rounded-xl">
+          {steps.map((label, index) => (
+            <button
+              key={index}
+              type="button"
+              onClick={() => dispatch(setStep(index + 1))}
+              className={`px-4 py-2 rounded-full text-sm transition-all duration-200 ${
+                step === index + 1
+                  ? "bg-purple-600 text-white"
+                  : "bg-white text-purple-600 border border-purple-600"
+              }`}
+            >
+              {index + 1}. {label}
+            </button>
+          ))}
+        </div>
+
+        {/* Current Form Step */}
+        {renderStep()}
+
+        {/* Navigation Buttons */}
+        <div className="flex justify-between mt-6">
+          {step > 1 && (
+            <button
+              type="button"
+              onClick={() => dispatch(prevStep())}
+              className="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300"
+            >
+              ⬅ Previous
+            </button>
+          )}
+
+          {step < 6 ? (
+            <button
+              type="button"
+              onClick={() => dispatch(nextStep())}
+              className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-4 py-2 rounded"
+            >
+              Next ➡
+            </button>
           ) : (
-            <div className="p-6 border rounded text-gray-500 bg-white shadow text-center">
-              No theme selected
-            </div>
+            <button
+              type="submit"
+              className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-4 py-2 rounded"
+            >
+              {isEdit ? "Update Resume" : "Create Resume"}
+            </button>
           )}
         </div>
+      </form>
+
+      {/* Right: Live Theme Preview with PDF download */}
+      <div className="">
+        <div className="flex justify-between items-center mb-4">
+          <button
+            onClick={handlePrint}
+            className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-4 py-2 rounded"
+          >
+            Download PDF
+          </button>
+        </div>
+
+        <div ref={componentRef} className=" rounded-lg shadow-md p-4 bg-white">
+          {renderThemePreview()}
+        </div>
       </div>
-    </>
+    </div>
   );
 };
+
 export default FormTab;

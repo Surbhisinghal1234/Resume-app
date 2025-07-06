@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
+
 export const resumeApi = createApi({
   reducerPath: "resumeApi",
   baseQuery: fetchBaseQuery({
@@ -15,19 +16,20 @@ export const resumeApi = createApi({
     },
   }),
   endpoints: (builder) => ({
-    submitResume: builder.mutation({
+    addResume: builder.mutation({
       query: (resumeData) => ({
         url: "/resume", 
         method: "POST",
         body: resumeData,
       }),
     }),
-    getResumes: builder.query({
-      query: () => ({
-        url: "/resume",
-        method: "GET",
-      }),
-    }),
+  getResumes: builder.query({
+  query: () => ({
+    url: "/resume",
+    method: "GET",
+  }),
+  providesTags: ["Resume"],
+}),
 
   deleteResume: builder.mutation({
       query: (id) => ({
@@ -36,7 +38,7 @@ export const resumeApi = createApi({
       }),
       invalidatesTags: ["Resume"],
     }),
-    editResume: builder.mutation({
+    updateResume: builder.mutation({
       query: ({ id, updatedData }) => ({
         url: `/resume/${id}`,
         method: 'PUT',
@@ -46,5 +48,5 @@ export const resumeApi = createApi({
   }),
 });
 
-export const { useSubmitResumeMutation, useGetResumesQuery,   useDeleteResumeMutation,
-  useEditResumeMutation } = resumeApi;
+export const { useAddResumeMutation, useGetResumesQuery,   useDeleteResumeMutation,
+  useUpdateResumeMutation } = resumeApi;

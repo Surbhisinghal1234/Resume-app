@@ -1,26 +1,37 @@
 export const fallback = {
-  name: "Surbhi Singhal",
-  designation: "Web Developer",
-  location: "Jaipur",
-  mobile: "9876543210",
-  email: "surbhi@gmail.com",
+  basicInfo: {
+    name: "Surbhi SInghal ",
+    email: "surbh@gmail.com",
+    mobile: "9876543210",
+    location: "New Delhi, India",
+    designation: "Frontend Developer",
+  },
+  skills: {
+    technical: ["React", "JavaScript", "HTML", "CSS"],
+    soft: ["Teamwork", "Communication"],
+  },
+  others: {
+    languages: ["English", "Hindi"],
+    hobbies: ["Coding", "Reading"],
+  },
   summary:
-    "Passionate web developer with hands-on experience in building responsive websites and web apps using modern technologies.",
-  skills: ["HTML", "CSS", "JavaScript", "React"],
-  languages: ["English", "Hindi"],
-  work: {
-    role: "Frontend Developer",
-    company: "ABC Tech",
-    duration: "2022 – Present",
-    description: [
-      "Built responsive user interfaces using React.",
-      "Worked closely with designers to convert designs into working code.",
-      "Optimized web apps for performance and accessibility.",
-    ],
-  },
-  education: {
-    degree: "B.Sc. Computer Science",
-    university: "Delhi University",
-    year: "2021",
-  },
+    "A passionate developer with strong frontend skills and a keen eye for UI/UX. Always eager to learn new technologies.",
+  workExperience: [
+    {
+      company: "TechCorp Pvt. Ltd.",
+      position: "Software Engineer",
+      startDate: "Jan 2022",
+      endDate: "Present",
+      description:
+        "Worked on building scalable frontend applications using React.\nCollaborated with cross-functional teams.",
+    },
+  ],
+  education: [
+    {
+      degree: "B.Tech in Computer Science",
+      institution: "ABC Institute of Technology",
+      year: "2021",
+    },
+  ],
+  certifications: ["React Developer Certificate", "JavaScript Mastery"],
 };

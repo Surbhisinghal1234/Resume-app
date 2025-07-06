@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { updateField, nextStep } from "../../features/resume/resumeSlice";
+import { updateField } from "../../features/resume/resumeSlice";
 import { useState, useEffect } from "react";
 
 const SkillsForm = () => {
@@ -59,10 +59,6 @@ const SkillsForm = () => {
     dispatch(updateField({ section: "skills", value: updated }));
   };
 
-  const handleNext = () => {
-    dispatch(nextStep());
-  };
-
   const renderTags = (type) => (
     <div className="flex flex-wrap gap-2 mt-2">
       {skills[type]?.map((skill, index) => (
@@ -97,8 +93,8 @@ const SkillsForm = () => {
           onChange={(e) => handleInputChange("technical", e.target.value)}
           onKeyDown={(e) => handleKeyDown(e, "technical")}
           className="w-full px-4 py-3 rounded-xl border-[2px] border-gray-300 shadow-md outline-none 
-             transition-all duration-200 
-             focus:border-[2px] focus:border-purple-500  focus:outline-[1.5px] focus:outline-black"
+            transition-all duration-200 
+            focus:border-[2px] focus:border-purple-500  focus:outline-[1.5px] focus:outline-black"
         />
       </div>
 
@@ -113,18 +109,9 @@ const SkillsForm = () => {
           onChange={(e) => handleInputChange("soft", e.target.value)}
           onKeyDown={(e) => handleKeyDown(e, "soft")}
           className="w-full px-4 py-3 rounded-xl border-[2px] border-gray-300 shadow-md outline-none 
-             transition-all duration-200 
-             focus:border-[2px] focus:border-purple-500  focus:outline-[1.5px] focus:outline-black"
+            transition-all duration-200 
+            focus:border-[2px] focus:border-purple-500  focus:outline-[1.5px] focus:outline-black"
         />
-      </div>
-
-      <div className="text-right mt-10">
-        <button
-          onClick={handleNext}
-          className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-4 py-2 rounded"
-        >
-          Next
-        </button>
       </div>
     </div>
   );
