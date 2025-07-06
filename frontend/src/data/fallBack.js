@@ -1,6 +1,6 @@
 export const fallback = {
   basicInfo: {
-    name: "Surbhi SInghal ",
+    name: "Surbhi Singhal ",
     email: "surbh@gmail.com",
     mobile: "9876543210",
     location: "New Delhi, India",
