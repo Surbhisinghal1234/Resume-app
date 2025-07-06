@@ -1,5 +1,6 @@
 import { useSelector } from "react-redux";
 import { fallback } from "../../data/fallback";
+
 import { MdEmail, MdLocationPin, MdPhone } from "react-icons/md";
 
 const Theme4 = () => {
