@@ -4,10 +4,10 @@ import ThemePreview from "./ThemePreview";
 import { useEffect } from "react";
 
 const themes = [
-  { id: "Theme1", label: "Classic", img: "/themes/theme1.png" },
-  { id: "Theme2", label: "Modern", img: "/themes/theme2.png" },
-  { id: "Theme3", label: "Elegant", img: "/themes/theme3.png" },
-  { id: "Theme4", label: "Bright", img: "/themes/theme4.png" },
+  { id: "Theme1", label: "Classic", img: "/public/theme4.png" },
+  { id: "Theme2", label: "Modern", img: "/public/theme4.png" },
+  { id: "Theme3", label: "Elegant", img: "/public/theme4.png" },
+  { id: "Theme4", label: "Bright", img: "/public/theme4.png" },
 ];
 const ThemeTab = () => {
   const dispatch = useDispatch();
@@ -33,7 +33,7 @@ useEffect(() => {
         {themes.map((theme) => (
           <div
             key={theme.id}
-            className={`border rounded p-2 cursor-pointer h-[20rem] w-[20rem] ${
+            className={`border rounded p-2 cursor-pointer object-cover h-[20rem] w-[20rem] ${
               selected === theme.id ? "border-blue-600" : "border-gray-300"
             }`}
             onClick={() => handleSelect(theme.id)}

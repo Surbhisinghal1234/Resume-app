@@ -8,7 +8,7 @@ import passwordRoutes from "./routes/passwordRoutes.js";
 import resumeRoutes from "./routes/resumeRoutes.js";
 
 const app = express();
-app.use(cors());
+app.use(cors("*"));
 app.use(express.json());
 app.use('/api', authRoutes);
 // app.use("/api/user", userRoutes);
