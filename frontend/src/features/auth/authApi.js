@@ -4,8 +4,8 @@ export const authApi = createApi({
   reducerPath: 'authApi',
 
   baseQuery: fetchBaseQuery({
-    baseUrl: 'http://localhost:5000/api',
-    // baseUrl: 'https://resume-app-l3ob.onrender.com/api',
+    // baseUrl: 'http://localhost:5000/api',
+    baseUrl: 'https://resume-app-l3ob.onrender.com/api',
 
     prepareHeaders: (headers) => {
       const token = localStorage.getItem("token");
