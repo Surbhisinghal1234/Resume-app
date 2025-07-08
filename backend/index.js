@@ -8,12 +8,9 @@ import passwordRoutes from "./routes/passwordRoutes.js";
 import resumeRoutes from "./routes/resumeRoutes.js";
 
 const app = express();
-app.use(cors({
-  origin: "https://resume-nybo1uhdp-surbhi-singhals-projects.vercel.app/", 
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  credentials: true
-}));
 app.use(express.json());
+app.use(cors({ origin: true, credentials: true }));
+
 app.use('/api', authRoutes);
 // app.use("/api/user", userRoutes);
 app.use("/api/auth", passwordRoutes);
