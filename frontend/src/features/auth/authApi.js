@@ -5,7 +5,7 @@ export const authApi = createApi({
 
   baseQuery: fetchBaseQuery({
     // baseUrl: 'http://localhost:5000/api',
-    baseUrl: 'https://resume-app-ndy2.onrender.com/api',
+    baseUrl: 'https://resume-app-tcte.onrender.com/api',
 
     prepareHeaders: (headers) => {
       const token = localStorage.getItem("token");
