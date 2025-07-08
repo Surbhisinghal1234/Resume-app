@@ -5,7 +5,7 @@ export const resumeApi = createApi({
   reducerPath: "resumeApi",
   baseQuery: fetchBaseQuery({
     // baseUrl: "http://localhost:5000/api",
-    baseUrl: "https://resume-app-l3ob.onrender.com/api",
+    baseUrl: "https://resume-app-ndy2.onrender.com/api",
 
     prepareHeaders: (headers) => {
       const token = localStorage.getItem("token");
