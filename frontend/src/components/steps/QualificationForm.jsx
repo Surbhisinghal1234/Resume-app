@@ -28,7 +28,7 @@ const QualificationForm = () => {
   }, [dispatch, qualification]);
 
   const handleChange = (index, field, value) => {
-    const updated = qualification.map((item) => ({ ...item })); // deep copy
+    const updated = qualification.map((item) => ({ ...item }));
     updated[index][field] = value;
     dispatch(updateField({ section: "qualification", value: updated }));
   };
@@ -93,6 +93,7 @@ const QualificationForm = () => {
       ))}
 
       <button
+      type="button"
         onClick={handleAdd}
         className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-4 py-2 rounded"
       >

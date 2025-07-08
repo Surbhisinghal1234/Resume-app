@@ -19,6 +19,7 @@ const initialState = {
         startDate: "",
         endDate: "",
         description: "",
+        currentlyWorking: false,
       },
     ],
     qualification: [
@@ -39,6 +40,7 @@ const initialState = {
       technical: [],
       soft: [],
     },
+    summary: "",
     others: {
       hobbies: [],
       languages: [],
@@ -96,6 +98,8 @@ setIsEdit: (state, action) => {
         certification: resume.certification || [],
         skills: resume.skills || { technical: [], soft: [] },
         others: resume.others || { hobbies: [], languages: [] },
+        summary: resume.summary || "",
+        theme: resume.theme || "Theme1",
       };
 
       state.selectedTheme = resume.theme || "Theme1";

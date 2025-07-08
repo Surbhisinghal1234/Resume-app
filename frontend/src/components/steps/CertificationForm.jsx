@@ -80,7 +80,8 @@ const CertificationForm = () => {
         </div>
       ))}
 
-      <button
+      <button 
+      type="button"
         onClick={handleAdd}
         className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-4 py-2 rounded"
       >

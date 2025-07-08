@@ -20,6 +20,7 @@ const resumeSchema = new mongoose.Schema({
       startDate: String,
       endDate: String,
       description: String,
+      currentlyWorking: Boolean, // Added for tracking current job
     }
   ],
   qualification: [
@@ -47,6 +48,10 @@ const resumeSchema = new mongoose.Schema({
   theme: {
     type: String,
     default: 'theme1',
+  },
+  summary: {
+    type: String,
+    default: '',
   },
 }, {
   timestamps: true,

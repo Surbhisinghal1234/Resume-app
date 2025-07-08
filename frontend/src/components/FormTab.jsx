@@ -13,6 +13,7 @@ import {
   useAddResumeMutation,
   useUpdateResumeMutation,
 } from "../features/resume/resumeApi";
+import { toast } from "react-toastify";
 
 // Form Steps
 import BasicInfoForm from "./steps/BasicInfoForm";
@@ -27,9 +28,11 @@ import Theme1 from "./themes/Theme1";
 import Theme2 from "./themes/Theme2";
 import Theme3 from "./themes/Theme3";
 import Theme4 from "./themes/Theme4";
+import SummeryForm from "./steps/SummeryForm";
 
 const FormTab = () => {
   const dispatch = useDispatch();
+  const currentUser = useSelector((state) => state.auth.user);
   const step = useSelector((state) => state.resume.step);
   const currentResume = useSelector((state) => state.resume.currentResume);
   const selectedTheme = useSelector((state) => state.resume.selectedTheme);
@@ -50,6 +53,7 @@ const FormTab = () => {
 
     const payload = {
       ...currentResume,
+       user: currentUser.uid, 
       theme: selectedTheme,
     };
 
@@ -57,17 +61,18 @@ const FormTab = () => {
       if (isEdit && currentResume.id) {
         await updateResumeApi({ id: currentResume.id, updatedData: payload });
         dispatch(updateResumeInStore(payload));
-        alert("Resume updated successfully!");
+        console.log("Submitting payload:", payload);
+        toast.success("Resume updated successfully!");
       } else {
         const response = await addResumeApi(payload).unwrap();
         dispatch(addResume(response));
-        alert("Resume created successfully!");
+        toast.success("Resume created successfully!");
       }
 
       dispatch(resetForm());
     } catch (error) {
       console.error("Submission error:", error);
-      alert("Something went wrong. Please try again.");
+      toast.error("Something went wrong. Please try again.");
     }
   };
 
@@ -83,7 +88,9 @@ const FormTab = () => {
         return <CertificationForm />;
       case 5:
         return <SkillsForm />;
-      case 6:
+        case 6:
+        return <SummeryForm />;
+      case 7:
         return <OthersForm />;
       default:
         return <BasicInfoForm />;
@@ -115,7 +122,9 @@ const FormTab = () => {
     "Qualification",
     "Certifications",
     "Skills",
+    "Summary",
     "Others",
+
   ];
 
   return (
@@ -126,13 +135,13 @@ const FormTab = () => {
         className="w-full lg:w-1/2 space-y-6 border-r pr-4"
       >
         {/* Step Navigation Buttons */}
-        <div className="flex flex-wrap justify-between gap-2 bg-purple-100 p-3 rounded-xl">
+        <div className="flex flex-wrap  gap-2 bg-purple-100 p-3 rounded-xl">
           {steps.map((label, index) => (
             <button
               key={index}
               type="button"
               onClick={() => dispatch(setStep(index + 1))}
-              className={`px-4 py-2 rounded-full text-sm transition-all duration-200 ${
+              className={`px-4 py-2 rounded text-sm transition-all duration-200 ${
                 step === index + 1
                   ? "bg-purple-600 text-white"
                   : "bg-white text-purple-600 border border-purple-600"

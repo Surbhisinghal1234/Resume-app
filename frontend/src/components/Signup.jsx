@@ -20,7 +20,7 @@ const Signup = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [signupUser, { isLoading }] = useSignupUserMutation();
-   const [showPassword, setShowPassword] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const { name, email, password, confirmPassword, mobile, agreedToTerms } =
@@ -74,6 +74,7 @@ const Signup = () => {
   return (
     <form
       onSubmit={handleSubmit}
+      autoComplete="on"
       className="bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600  text-white p-8 rounded-xl shadow-lg max-w-lg mx-auto mt-10 space-y-5"
     >
       <h2 className="text-3xl font-bold text-center mb-4">Create an Account</h2>
@@ -83,6 +84,7 @@ const Signup = () => {
         <input
           type="text"
           placeholder="Name"
+          name="name"
           value={name}
           autoComplete="name"
           onChange={(e) => dispatch(setName(e.target.value))}
@@ -96,6 +98,7 @@ const Signup = () => {
           type="email"
           placeholder="Email"
           autoComplete="email"
+          name="email"
           value={email}
           onChange={(e) => dispatch(setEmail(e.target.value))}
           className="w-full p-3 rounded bg-white text-black focus:outline-none focus:ring-2 focus:ring-indigo-400"
@@ -107,11 +110,12 @@ const Signup = () => {
           type={showPassword ? "text" : "password"}
           autoComplete="password"
           placeholder="Password"
+          name="password"
           value={password}
           onChange={(e) => dispatch(setPassword(e.target.value))}
           className="w-full p-3 rounded bg-white text-black focus:outline-none focus:ring-2 focus:ring-indigo-400"
         />
-         <button
+        <button
           type="button"
           onClick={() => setShowPassword(!showPassword)}
           className="absolute right-3 top-11 text-black"
@@ -122,15 +126,14 @@ const Signup = () => {
       <div className="relative">
         <label className="block mb-1">Confirm Password</label>
         <input
-        type={showConfirmPassword ? "text" : "password"}
+          type={showConfirmPassword ? "text" : "password"}
           autoComplete="confirm-password"
-
           placeholder="Confirm Password"
           value={confirmPassword}
           onChange={(e) => dispatch(setConfirmPassword(e.target.value))}
           className="w-full p-3 rounded bg-white text-black focus:outline-none focus:ring-2 focus:ring-indigo-400"
         />
-          <button
+        <button
           type="button"
           onClick={() => setShowConfirmPassword(!showConfirmPassword)}
           className="absolute right-3 top-11 text-black"
@@ -142,7 +145,9 @@ const Signup = () => {
       <div>
         <label htmlFor="">Mobile No.</label>
         <input
-          type="text"
+          type="tel"
+          name="tel"
+          autoComplete="tel"
           placeholder="Mobile"
           value={mobile}
           onChange={(e) => dispatch(setMobile(e.target.value))}

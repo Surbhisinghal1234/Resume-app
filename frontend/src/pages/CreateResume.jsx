@@ -2,9 +2,22 @@ import { useState } from "react";
 import ThemeTab from "../components/ThemeTab";
 import FormTab from "../components/FormTab";
 import ResumeTab from "../components/ResumeTab";
+import { useLocation } from "react-router-dom";
+import { useEffect } from "react";
 
 const CreateResume = () => {
-  const [activeTab, setActiveTab] = useState("theme");
+  const location = useLocation();
+  
+
+const [activeTab, setActiveTab] = useState(location.state?.tab || "theme");
+useEffect(() => {
+  if (location.state?.tab) {
+    setActiveTab(location.state.tab);
+    // Prevent stale state reuse
+    window.history.replaceState({}, document.title);
+  }
+}, [location]);
+console.log("location.state: ", location.state);
 
   const renderTabOutlet = () => {
     switch (activeTab) {

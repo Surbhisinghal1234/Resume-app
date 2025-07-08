@@ -12,7 +12,7 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-// 👉 Send OTP
+// Send OTP
 export const sendOtp = async (req, res) => {
   const { email } = req.body;
   const user = await User.findOne({ email });

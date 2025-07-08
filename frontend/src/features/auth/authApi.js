@@ -4,8 +4,8 @@ export const authApi = createApi({
   reducerPath: 'authApi',
 
   baseQuery: fetchBaseQuery({
-    // baseUrl: 'http://localhost:5000/api',
-    baseUrl: 'https://resume-app-l3ob.onrender.com/api',
+    baseUrl: 'http://localhost:5000/api',
+    // baseUrl: 'https://resume-app-l3ob.onrender.com/api',
 
     prepareHeaders: (headers) => {
       const token = localStorage.getItem("token");
@@ -33,12 +33,12 @@ export const authApi = createApi({
       }),
     }),
 
-    getProfile: builder.query({
-  query: () => ({
-    url: "/user/profile",
-    method: "GET",
-  }),
-}),
+//     getProfile: builder.query({
+//   query: () => ({
+//     url: "/user/profile",
+//     method: "GET",
+//   }),
+// }),
 
 sendOtp: builder.mutation({
   query: (inputData) => ({
@@ -69,5 +69,5 @@ resetPassword: builder.mutation({
   
 });
 
-export const { useSignupUserMutation , useLoginUserMutation, useGetProfileQuery, useSendOtpMutation, useVerifyOtpMutation,
+export const { useSignupUserMutation , useLoginUserMutation, useSendOtpMutation, useVerifyOtpMutation,
    useResetPasswordMutation} = authApi;

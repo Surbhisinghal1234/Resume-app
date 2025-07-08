@@ -6,11 +6,14 @@ const Theme1 = () => {
   const resume = useSelector((state) => state.resume.currentResume);
 
  
-  const basicInfo = resume.basicInfo || fallback.basicInfo;
+ const basicInfo = resume.basicInfo?.name ? resume.basicInfo : fallback.basicInfo;
   const skills = resume.skills?.technical?.length ? resume.skills : fallback.skills;
   const others = resume.others?.languages?.length ? resume.others : fallback.others;
   const summary = resume.summary || fallback.summary;
-  const workExperience = resume.workExperience?.length ? resume.workExperience : fallback.workExperience;
+ const workExperience =
+  resume.workExperience?.some(exp => exp.company || exp.position || exp.description)
+    ? resume.workExperience
+    : fallback.workExperience;
   const education = resume.education?.length ? resume.education : fallback.education;
   const certifications = resume.certifications?.length ? resume.certifications : fallback.certifications;
 

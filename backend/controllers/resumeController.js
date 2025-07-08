@@ -48,23 +48,6 @@ export const getUserResumes = async (req, res) => {
   }
 };
 
-// GET /api/resume/:id
-export const getSingleResume = async (req, res) => {
-  try {
-    const resume = await Resume.findOne({
-      _id: req.params.id,
-      user: req.user._id,
-    });
-
-    if (!resume) {
-      return res.status(404).json({ error: "Resume not found" });
-    }
-
-    res.json(resume);
-  } catch (err) {
-    res.status(500).json({ error: "Failed to get resume" });
-  }
-};
 
 // PUT /api/resume/:id
 export const updateResume = async (req, res) => {

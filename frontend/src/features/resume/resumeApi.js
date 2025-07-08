@@ -4,8 +4,8 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const resumeApi = createApi({
   reducerPath: "resumeApi",
   baseQuery: fetchBaseQuery({
-    // baseUrl: "http://localhost:5000/api",
-    baseUrl: "https://resume-app-l3ob.onrender.com/api",
+    baseUrl: "http://localhost:5000/api",
+    // baseUrl: "https://resume-app-l3ob.onrender.com/api",
 
     prepareHeaders: (headers) => {
       const token = localStorage.getItem("token");
@@ -15,6 +15,7 @@ export const resumeApi = createApi({
       return headers;
     },
   }),
+   tagTypes: ["Resume"],
   endpoints: (builder) => ({
     addResume: builder.mutation({
       query: (resumeData) => ({
@@ -45,8 +46,11 @@ export const resumeApi = createApi({
         body: updatedData,
       }),
     }),
+
+      
+
   }),
 });
 
 export const { useAddResumeMutation, useGetResumesQuery,   useDeleteResumeMutation,
-  useUpdateResumeMutation } = resumeApi;
+  useUpdateResumeMutation, useGetSingleResumeQuery  } = resumeApi;

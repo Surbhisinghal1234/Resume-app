@@ -37,7 +37,8 @@ const Navbar = () => {
         <div className="flex justify-between text-black items-center bg-gray-200 shadow-amber-200 px-[3rem] py-2 gap-[2rem] ">
           <h2 className="text-2xl bg-gradient-to-r from-purple-600 to-pink-600  bg-clip-text text-transparent font-bold tracking-tight hover:text-gray-800 transition">
             {" "}
-            <Link to="/create-resume">Resume Builder</Link>{" "}
+            <Link to="/create-resume" state={{ tab: "form" }}>Resume Builder</Link>{" "}
+
           </h2>
           <ul className="flex gap-[2rem] items-center font-medium">
             <li> {user?.name}</li>
@@ -45,7 +46,7 @@ const Navbar = () => {
 
             <li>
               {" "}
-              <Link to="/create-resume">Create Resume</Link>
+              <Link to="/create-resume" state={{ tab: "form" }}>Create Resume</Link>
             </li>
             <button
             className="bg-gradient-to-r from-purple-600 to-pink-600  font-semibold hover:bg-gray-300 text-black px-4 py-2 rounded-md shadow transition duration-200"
