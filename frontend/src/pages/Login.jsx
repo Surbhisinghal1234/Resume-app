@@ -45,60 +45,79 @@ const Login = () => {
   };
 
   return (
-    <form autoComplete="on"
-      onSubmit={handleLogin}
-      className="bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 text-white p-8 rounded-xl shadow-lg max-w-lg mx-auto mt-20 space-y-5"
-    >
-      <h2 className="text-2xl font-semibold mb-6 text-center">Sign in</h2>
+ 
 
+ <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#7e5bef] via-[#fb66c9] to-[#4f46e5] px-4 py-10">
+  <form
+    onSubmit={handleLogin}
+    autoComplete="on"
+    className="w-full max-w-md bg-white/20 backdrop-blur-xl border border-white/30 text-white p-8 rounded-3xl shadow-[0_8px_32px_rgba(0,0,0,0.3)] space-y-6"
+  >
+    <h2 className="text-3xl font-bold text-center drop-shadow-sm tracking-wide">Welcome Back 👋</h2>
+    <p className="text-center text-sm text-white/80">Login to continue building your resume</p>
+
+    {/* Email */}
+    <div>
+      <label className="text-sm text-white/80 mb-1 block">Email</label>
       <input
         type="email"
-        name="email"
-        placeholder="Email"
         value={input}
-        autoComplete="email"
         onChange={(e) => setInput(e.target.value)}
-         className="w-full p-3 rounded-xl bg-white text-black shadow-2xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition duration-300"
-
+        autoComplete="email"
+        placeholder="abc@gmail.com"
+        className="w-full px-4 py-3 rounded-xl bg-white/90 text-black border border-gray-300 shadow-inner focus:outline-none focus:ring-2 focus:ring-purple-500 transition"
       />
-      <div className="relative">
-        <input
-          type={showPassword ? "text" : "password"}
-          name="password"
-          placeholder="Password"
-          autoComplete="current-password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          className="w-full p-3 rounded bg-white text-black focus:outline-none focus:ring-2 focus:ring-indigo-400"
-        />
-        <button
-          type="button"
-          onClick={() => setShowPassword(!showPassword)}
-          className="absolute right-3 top-4 text-black"
-        >
-          {showPassword ? <FaEye /> : < FaEyeSlash/>}
-        </button>
-        
-      </div>
+    </div>
 
+    {/* Password */}
+    <div className="relative">
+      <label className="text-sm text-white/80 mb-1 block">Password</label>
+      <input
+        type={showPassword ? "text" : "password"}
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        autoComplete="current-password"
+        placeholder="••••••••"
+        className="w-full px-4 py-3 rounded-xl bg-white/90 text-black border border-gray-300 shadow-inner focus:outline-none focus:ring-2 focus:ring-purple-500 transition"
+      />
       <button
-        type="submit"
-        disabled={isLoading}
-        className="w-full bg-white text-indigo-700 hover:bg-gray-100 font-bold py-3 rounded transition duration-300"
+        type="button"
+        onClick={() => setShowPassword(!showPassword)}
+        className="absolute right-4 bottom-3 text-gray-600"
       >
-        {isLoading ? <ClipLoader color="#000" size={20} />: "Login"}
+        {showPassword ? <FaEye /> : <FaEyeSlash />}
       </button>
+    </div>
 
-      <div className="text-right text-sm underline hover:text-gray-300">
-        <Link to="/forgot-password">Forgot Password?</Link>
-      </div>
-      <p className="text-center text-sm mt-3">
-        Don’t have an account?{" "}
-        <Link to="/signup" className="underline hover:text-gray-300">
-          Sign up
-        </Link>
-      </p>
-    </form>
+    {/* Submit Button */}
+    <button
+      type="submit"
+      disabled={isLoading}
+      className="w-full py-3 font-semibold rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 text-white hover:brightness-110 hover:scale-[1.02] shadow-lg transition-all duration-300"
+    >
+      {isLoading ? <ClipLoader color="#fff" size={20} /> : "Login"}
+    </button>
+
+    {/* Links */}
+    <div className="text-right text-sm">
+      <Link
+        to="/forgot-password"
+        className="text-white/80 hover:underline hover:text-white transition"
+      >
+        Forgot Password?
+      </Link>
+    </div>
+
+    <p className="text-center text-sm text-white/80 mt-3">
+      Don’t have an account?{" "}
+      <Link to="/signup" className="underline hover:text-white transition">
+        Sign up
+      </Link>
+    </p>
+  </form>
+</div>
+
+
   );
 };
 

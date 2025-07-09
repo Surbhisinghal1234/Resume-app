@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useResetPasswordMutation } from "../features/auth/authApi";
 
@@ -28,43 +28,59 @@ const handleReset = async (e) => {
   }
 };
   return (
-    <form
-      onSubmit={handleReset}
-         className="bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 text-white p-8 rounded-xl shadow-lg max-w-lg mx-auto mt-20 space-y-5"
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-600 via-pink-500 to-indigo-500 px-4 py-12">
+  <form
+    onSubmit={handleReset}
+    className="w-full max-w-md bg-white/20 backdrop-blur-xl border border-white/30 text-white p-8 rounded-3xl shadow-[0_8px_32px_rgba(0,0,0,0.25)] space-y-6"
+  >
+    <h2 className="text-3xl font-bold text-center">Reset Password</h2>
+    <p className="text-center text-sm text-white/80">
+      Please enter your email and new password below
+    </p>
+
+    {/* Email */}
+    <input
+      type="email"
+      placeholder="Email"
+      value={email}
+      onChange={(e) => setEmail(e.target.value)}
+      className="w-full px-4 py-3 rounded-xl bg-white text-black border border-gray-300 shadow-inner focus:outline-none focus:ring-2 focus:ring-purple-500 transition"
+    />
+
+    {/* New Password */}
+    <input
+      type="password"
+      placeholder="New Password"
+      value={password}
+      onChange={(e) => setPassword(e.target.value)}
+      className="w-full px-4 py-3 rounded-xl bg-white text-black border border-gray-300 shadow-inner focus:outline-none focus:ring-2 focus:ring-purple-500 transition"
+    />
+
+    {/* Confirm Password */}
+    <input
+      type="password"
+      placeholder="Confirm Password"
+      value={confirmPassword}
+      onChange={(e) => setConfirmPassword(e.target.value)}
+      className="w-full px-4 py-3 rounded-xl bg-white text-black border border-gray-300 shadow-inner focus:outline-none focus:ring-2 focus:ring-purple-500 transition"
+    />
+
+    {/* Submit */}
+    <button
+      type="submit"
+      className="w-full py-3 font-semibold rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 text-white hover:brightness-110 shadow-md transition-all duration-300"
     >
-      <h2 className="text-2xl font-bold mb-4 text-center">Reset Password</h2>
+      Reset Password
+    </button>
 
-      <input
-        type="email"
-        placeholder="Email"
-         className="w-full p-3 rounded bg-white text-black focus:outline-none focus:ring-2 focus:ring-indigo-400"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
+    <p className="text-center text-sm text-white/80 mt-2">
+      <Link to="/" className="underline hover:text-white transition">
+        Back to Login
+      </Link>
+    </p>
+  </form>
+</div>
 
-      <input
-        type="password"
-        placeholder="New Password"
-         className="w-full p-3 rounded bg-white text-black focus:outline-none focus:ring-2 focus:ring-indigo-400"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-
-      <input
-        type="password"
-        placeholder="Confirm Password"
-          className="w-full p-3 rounded bg-white text-black focus:outline-none focus:ring-2 focus:ring-indigo-400"
-        value={confirmPassword}
-        onChange={(e) => setConfirmPassword(e.target.value)}
-      />
-
-      <button
-        type="submit"
-       className="w-full bg-white text-indigo-700 hover:bg-gray-100 font-bold py-3 rounded transition duration-300"
-      >
-        Reset Password
-      </button>
-    </form>
   );
 };
 

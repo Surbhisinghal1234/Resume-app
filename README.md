@@ -37,6 +37,9 @@ A full-stack Resume Builder application where users can sign up, choose a theme,
 - Nodemailer (for OTP via email)
 - bcryptjs (for password hashing)
 - JWT (for authentication)
+- Express Rate-Limit (OTP resend security)
+
+
 
 
 

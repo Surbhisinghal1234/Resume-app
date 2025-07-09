@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useVerifyOtpMutation } from "../features/auth/authApi";
+import { useVerifyOtpMutation, useSendOtpMutation } from "../features/auth/authApi";
 import { toast } from "react-toastify";
 
 const VerifyOtp = () => {
@@ -10,18 +10,20 @@ const VerifyOtp = () => {
   const email = localStorage.getItem("resetEmail");
 
   const [verifyOtp] = useVerifyOtpMutation();
+  const [sendOtp] = useSendOtpMutation();
+
+  const [resendDisabled, setResendDisabled] = useState(false);
+  const [timer, setTimer] = useState(60);
 
   const handleChange = (e, index) => {
     const value = e.target.value;
 
-    // Allow only numbers
     if (!/^[0-9]?$/.test(value)) return;
 
     const newOtp = [...otp];
     newOtp[index] = value;
     setOtp(newOtp);
 
-    // Move to next input
     if (value && index < 5) {
       inputRefs.current[index + 1].focus();
     }
@@ -44,45 +46,85 @@ const VerifyOtp = () => {
 
     try {
       await verifyOtp({ email, otp: otpValue }).unwrap();
-      toast.success("OTP verified successfully!");
+      toast.success("OTP verified successfully");
       navigate("/reset-password");
     } catch (err) {
-      console.error("Invalid OTP error:", err);
       const message = err?.data?.message || "Invalid OTP";
       toast.error(message);
     }
   };
 
+  const handleResendOtp = async () => {
+    try {
+      await sendOtp({ email }).unwrap();
+      toast.success("OTP resent successfully");
+      setResendDisabled(true);
+      setTimer(60);
+
+      const countdown = setInterval(() => {
+        setTimer((prev) => {
+          if (prev === 1) {
+            clearInterval(countdown);
+            setResendDisabled(false);
+            return 60;
+          }
+          return prev - 1;
+        });
+      }, 1000);
+    } catch  {
+      toast.error("Failed to resend OTP");
+    }
+  };
+
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 text-white p-8 rounded-xl shadow-lg max-w-lg mx-auto mt-20 space-y-5"
-    >
-      <h2 className="text-3xl font-bold text-center mb-4">Verify OTP</h2>
-
-      <div className="flex justify-center gap-2 ">
-        {otp.map((digit, index) => (
-          <input
-            key={index}
-            type="text"
-            inputMode="numeric"
-            maxLength="1"
-            value={digit}
-            onChange={(e) => handleChange(e, index)}
-            onKeyDown={(e) => handleKeyDown(e, index)}
-            ref={(el) => (inputRefs.current[index] = el)}
-            className="w-10 h-10 text-center text-white border-white text-xl rounded border focus:outline-none focus:ring-2 focus:ring-indigo-400"
-          />
-        ))}
-      </div>
-
-      <button
-        type="submit"
-        className="w-full bg-white text-indigo-700 hover:bg-gray-100 font-bold py-3 rounded transition duration-300"
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-600 via-pink-500 to-indigo-500 px-4 py-12">
+      <form
+        onSubmit={handleSubmit}
+        className="w-full max-w-md bg-white/20 backdrop-blur-xl border border-white/30 text-white p-8 rounded-3xl shadow-[0_8px_32px_rgba(0,0,0,0.25)] space-y-6"
       >
-        Verify
-      </button>
-    </form>
+        <h2 className="text-3xl font-bold text-center">Verify OTP</h2>
+        <p className="text-center text-sm text-white/80">
+          Enter the 6-digit code sent to your email
+        </p>
+
+        <div className="flex justify-center gap-3 mt-2">
+          {otp.map((digit, index) => (
+            <input
+              key={index}
+              type="text"
+              inputMode="numeric"
+              maxLength="1"
+              value={digit}
+              onChange={(e) => handleChange(e, index)}
+              onKeyDown={(e) => handleKeyDown(e, index)}
+              ref={(el) => (inputRefs.current[index] = el)}
+              className="w-12 h-12 text-center text-lg font-semibold bg-white text-black rounded-xl border border-gray-300 shadow-inner focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all"
+            />
+          ))}
+        </div>
+
+        <button
+          type="submit"
+          className="w-full py-3 font-semibold rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 text-white hover:brightness-110 shadow-lg transition-all duration-300"
+        >
+          Verify
+        </button>
+
+        <p className="text-center text-sm text-white/80 mt-2">
+          Didn’t receive the code?{" "}
+          <button
+            type="button"
+            onClick={handleResendOtp}
+            disabled={resendDisabled}
+            className={`underline ${
+              resendDisabled ? "opacity-50 cursor-not-allowed" : "hover:text-white"
+            }`}
+          >
+            Resend OTP {resendDisabled && `(${timer}s)`}
+          </button>
+        </p>
+      </form>
+    </div>
   );
 };
 

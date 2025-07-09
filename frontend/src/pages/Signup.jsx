@@ -72,121 +72,138 @@ const Signup = () => {
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      autoComplete="on"
-      className="bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600  text-white p-8 rounded-xl shadow-lg max-w-lg mx-auto mt-10 space-y-5"
-    >
-      <h2 className="text-3xl font-bold text-center mb-4">Create an Account</h2>
+ 
 
-      <div>
-        <label className="block mb-1">Full Name *</label>
-        <input
-          type="text"
-          placeholder="Name"
-          name="name"
-          value={name}
-          autoComplete="name"
-          onChange={(e) => dispatch(setName(e.target.value))}
-          className="w-full p-3 rounded bg-white text-black focus:outline-none focus:ring-2 focus:ring-indigo-400"
-        />
-      </div>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-600 via-pink-500 to-indigo-500 px-4 py-12">
+  <form
+    onSubmit={handleSubmit}
+    autoComplete="on"
+    className="w-full max-w-lg bg-white/20 backdrop-blur-lg text-white p-8 rounded-3xl shadow-[0_8px_32px_rgba(0,0,0,0.25)] border border-white/30 space-y-5"
+  >
+    <h2 className="text-3xl font-bold text-center">Create an Account</h2>
 
-      <div>
-        <label className="block mb-1"> Email</label>
-        <input
-          type="email"
-          placeholder="Email"
-          autoComplete="email"
-          name="email"
-          value={email}
-          onChange={(e) => dispatch(setEmail(e.target.value))}
-          className="w-full p-3 rounded bg-white text-black focus:outline-none focus:ring-2 focus:ring-indigo-400"
-        />
-      </div>
-      <div className="relative">
-        <label className="block mb-1"> Password</label>
-        <input
-          type={showPassword ? "text" : "password"}
-          autoComplete="password"
-          placeholder="Password"
-          name="password"
-          value={password}
-          onChange={(e) => dispatch(setPassword(e.target.value))}
-          className="w-full p-3 rounded bg-white text-black focus:outline-none focus:ring-2 focus:ring-indigo-400"
-        />
-        <button
-          type="button"
-          onClick={() => setShowPassword(!showPassword)}
-          className="absolute right-3 top-11 text-black"
-        >
-          {showPassword ? <FaEye /> : <FaEyeSlash />}
-        </button>
-      </div>
-      <div className="relative">
-        <label className="block mb-1">Confirm Password</label>
-        <input
-          type={showConfirmPassword ? "text" : "password"}
-          autoComplete="confirm-password"
-          placeholder="Confirm Password"
-          value={confirmPassword}
-          onChange={(e) => dispatch(setConfirmPassword(e.target.value))}
-          className="w-full p-3 rounded bg-white text-black focus:outline-none focus:ring-2 focus:ring-indigo-400"
-        />
-        <button
-          type="button"
-          onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-          className="absolute right-3 top-11 text-black"
-        >
-          {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
-        </button>
-      </div>
+    {/* Name */}
+    <div>
+      <label className="block mb-1 text-white/90">Full Name *</label>
+      <input
+        type="text"
+        placeholder="Name"
+        name="name"
+        value={name}
+        autoComplete="name"
+        onChange={(e) => dispatch(setName(e.target.value))}
+        className="w-full p-3 rounded-xl bg-white text-black border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-500"
+      />
+    </div>
 
-      <div>
-        <label htmlFor="">Mobile No.</label>
-        <input
-          type="tel"
-          name="tel"
-          autoComplete="tel"
-          placeholder="Mobile"
-          value={mobile}
-          onChange={(e) => dispatch(setMobile(e.target.value))}
-          className="w-full p-3 rounded bg-white text-black focus:outline-none focus:ring-2 focus:ring-indigo-400"
-        />
-      </div>
-      <label className="flex items-center mb-4">
-        <input
-          type="checkbox"
-          checked={agreedToTerms}
-          onChange={(e) => dispatch(setAgreedToTerms(e.target.checked))}
-          className="mr-2"
-        />
-        <span>
-          I agree to the{" "}
-          <a href="/terms" className="text-blue-600 underline">
-            Terms and Conditions
-          </a>
-        </span>
-      </label>
+    {/* Email */}
+    <div>
+      <label className="block mb-1 text-white/90">Email</label>
+      <input
+        type="email"
+        placeholder="Email"
+        autoComplete="email"
+        name="email"
+        value={email}
+        onChange={(e) => dispatch(setEmail(e.target.value))}
+        className="w-full p-3 rounded-xl bg-white text-black border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-500"
+      />
+    </div>
 
+    {/* Password */}
+    <div className="relative">
+      <label className="block mb-1 text-white/90">Password</label>
+      <input
+        type={showPassword ? "text" : "password"}
+        autoComplete="new-password"
+        placeholder="Password"
+        name="password"
+        value={password}
+        onChange={(e) => dispatch(setPassword(e.target.value))}
+        className="w-full p-3 rounded-xl bg-white text-black border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-500"
+      />
       <button
-        type="submit"
-        disabled={!agreedToTerms || isLoading}
-        className={`w-full py-2  rounded ${
-          !agreedToTerms || isLoading
-            ? "bg-white text-black cursor-not-allowed"
-            : "bg-blue-600 hover:bg-blue-700"
-        }`}
+        type="button"
+        onClick={() => setShowPassword(!showPassword)}
+        className="absolute right-3 bottom-3 text-gray-700"
       >
-        {isLoading ? <ClipLoader color="#000" size={20} /> : "Signup"}
+        {showPassword ? <FaEye /> : <FaEyeSlash />}
       </button>
-      <p className="text-center text-sm mt-3">
-        Already a member?{" "}
-        <Link to="/" className="underline hover:text-gray-300">
-          Sign In
-        </Link>
-      </p>
-    </form>
+    </div>
+
+    {/* Confirm Password */}
+    <div className="relative">
+      <label className="block mb-1 text-white/90">Confirm Password</label>
+      <input
+        type={showConfirmPassword ? "text" : "password"}
+        autoComplete="new-password"
+        placeholder="Confirm Password"
+        value={confirmPassword}
+        onChange={(e) => dispatch(setConfirmPassword(e.target.value))}
+        className="w-full p-3 rounded-xl bg-white text-black border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-500"
+      />
+      <button
+        type="button"
+        onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+        className="absolute right-3 bottom-3 text-gray-700"
+      >
+        {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
+      </button>
+    </div>
+
+    {/* Mobile */}
+    <div>
+      <label className="block mb-1 text-white/90">Mobile No.</label>
+      <input
+        type="tel"
+        name="tel"
+        autoComplete="tel"
+        placeholder="Mobile"
+        value={mobile}
+        onChange={(e) => dispatch(setMobile(e.target.value))}
+        className="w-full p-3 rounded-xl bg-white text-black border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-500"
+      />
+    </div>
+
+    {/* Terms Checkbox */}
+    <label className="flex items-center text-sm text-white/90 space-x-2">
+      <input
+        type="checkbox"
+        checked={agreedToTerms}
+        onChange={(e) => dispatch(setAgreedToTerms(e.target.checked))}
+        className="w-4 h-4"
+      />
+      <span>
+        I agree to the{" "}
+        <a href="/terms" className="underline text-blue-200 hover:text-blue-300">
+          Terms and Conditions
+        </a>
+      </span>
+    </label>
+
+    {/* Submit Button */}
+    <button
+      type="submit"
+      disabled={!agreedToTerms || isLoading}
+      className={`w-full py-3 font-semibold rounded-xl ${
+        !agreedToTerms || isLoading
+          ? "bg-white text-black cursor-not-allowed"
+          : "bg-gradient-to-r from-purple-600 to-pink-600 hover:brightness-110 shadow-lg transition-all duration-300"
+      }`}
+    >
+      {isLoading ? <ClipLoader color="#000" size={20} /> : "Signup"}
+    </button>
+
+    
+    <p className="text-center text-sm text-white/90 mt-3">
+      Already a member?{" "}
+      <Link to="/create-resume" className="underline hover:text-white transition">
+        Sign In
+      </Link>
+    </p>
+  </form>
+</div>
+
   );
 };
 
