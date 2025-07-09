@@ -77,7 +77,7 @@ const VerifyOtp = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-600 via-pink-500 to-indigo-500 px-4 py-12">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-600 to-pink-500  px-4 py-12">
       <form
         onSubmit={handleSubmit}
         className="w-full max-w-md bg-white/20 backdrop-blur-xl border border-white/30 text-white p-8 rounded-3xl shadow-[0_8px_32px_rgba(0,0,0,0.25)] space-y-6"
@@ -98,7 +98,7 @@ const VerifyOtp = () => {
               onChange={(e) => handleChange(e, index)}
               onKeyDown={(e) => handleKeyDown(e, index)}
               ref={(el) => (inputRefs.current[index] = el)}
-              className="w-12 h-12 text-center text-lg font-semibold bg-white text-black rounded-xl border border-gray-300 shadow-inner focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all"
+              className="w-full px-4 py-3 rounded-xl bg-white/10 text-white placeholder-white/70 border border-white/30 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-white/50 transition"
             />
           ))}
         </div>

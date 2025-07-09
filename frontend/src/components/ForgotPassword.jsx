@@ -25,7 +25,7 @@ const ForgotPassword = () => {
 };
 
   return (
-   <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-600 via-pink-500 to-indigo-500 px-4 py-12">
+   <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-600 to-pink-500  px-4 py-12">
   <form
     onSubmit={handleSubmit}
     className="w-full max-w-md bg-white/20 backdrop-blur-xl border border-white/30 text-white p-8 rounded-3xl shadow-[0_8px_32px_rgba(0,0,0,0.25)] space-y-6"
@@ -37,11 +37,12 @@ const ForgotPassword = () => {
 
     <input
       type="email"
-      placeholder="you@example.com"
+      name="email"
+      placeholder="abc@gmail.com"
       value={email}
       required
       onChange={(e) => setEmail(e.target.value)}
-      className="w-full px-4 py-3 rounded-xl bg-white text-black border border-gray-300 shadow-inner focus:outline-none focus:ring-2 focus:ring-purple-500 transition"
+   className="w-full px-4 py-3 rounded-xl bg-white/10 text-white placeholder-white/70 border border-white/30 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-white/50 transition"
     />
 
     <button

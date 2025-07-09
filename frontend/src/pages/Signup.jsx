@@ -74,7 +74,7 @@ const Signup = () => {
   return (
  
 
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-600 via-pink-500 to-indigo-500 px-4 py-12">
+   <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-500 to-pink-500 px-4 py-12">
   <form
     onSubmit={handleSubmit}
     autoComplete="on"
@@ -83,44 +83,37 @@ const Signup = () => {
     <h2 className="text-3xl font-bold text-center">Create an Account</h2>
 
     {/* Name */}
-    <div>
-      <label className="block mb-1 text-white/90">Full Name *</label>
-      <input
-        type="text"
-        placeholder="Name"
-        name="name"
-        value={name}
-        autoComplete="name"
-        onChange={(e) => dispatch(setName(e.target.value))}
-        className="w-full p-3 rounded-xl bg-white text-black border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-500"
-      />
-    </div>
+    <input
+      type="text"
+      placeholder="👤 Full Name"
+      name="name"
+      value={name}
+      autoComplete="name"
+      onChange={(e) => dispatch(setName(e.target.value))}
+        className="w-full p-3 rounded-xl bg-white/10 text-white placeholder-white/70 border border-white/30 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-white/50 transition"
+    />
 
     {/* Email */}
-    <div>
-      <label className="block mb-1 text-white/90">Email</label>
-      <input
-        type="email"
-        placeholder="Email"
-        autoComplete="email"
-        name="email"
-        value={email}
-        onChange={(e) => dispatch(setEmail(e.target.value))}
-        className="w-full p-3 rounded-xl bg-white text-black border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-500"
-      />
-    </div>
+    <input
+      type="email"
+      placeholder="📧 Email Address"
+      autoComplete="email"
+      name="email"
+      value={email}
+      onChange={(e) => dispatch(setEmail(e.target.value))}
+        className="w-full p-3 rounded-xl bg-white/10 text-white placeholder-white/70 border border-white/30 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-white/50 transition"
+    />
 
     {/* Password */}
     <div className="relative">
-      <label className="block mb-1 text-white/90">Password</label>
       <input
         type={showPassword ? "text" : "password"}
         autoComplete="new-password"
-        placeholder="Password"
+        placeholder="🔒 Password"
         name="password"
         value={password}
         onChange={(e) => dispatch(setPassword(e.target.value))}
-        className="w-full p-3 rounded-xl bg-white text-black border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-500"
+          className="w-full p-3 rounded-xl bg-white/10 text-white placeholder-white/70 border border-white/30 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-white/50 transition"
       />
       <button
         type="button"
@@ -133,14 +126,13 @@ const Signup = () => {
 
     {/* Confirm Password */}
     <div className="relative">
-      <label className="block mb-1 text-white/90">Confirm Password</label>
       <input
         type={showConfirmPassword ? "text" : "password"}
         autoComplete="new-password"
-        placeholder="Confirm Password"
+        placeholder="🔒 Confirm Password"
         value={confirmPassword}
         onChange={(e) => dispatch(setConfirmPassword(e.target.value))}
-        className="w-full p-3 rounded-xl bg-white text-black border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-500"
+         className="w-full p-3 rounded-xl bg-white/10 text-white placeholder-white/70 border border-white/30 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-white/50 transition"
       />
       <button
         type="button"
@@ -152,20 +144,17 @@ const Signup = () => {
     </div>
 
     {/* Mobile */}
-    <div>
-      <label className="block mb-1 text-white/90">Mobile No.</label>
-      <input
-        type="tel"
-        name="tel"
-        autoComplete="tel"
-        placeholder="Mobile"
-        value={mobile}
-        onChange={(e) => dispatch(setMobile(e.target.value))}
-        className="w-full p-3 rounded-xl bg-white text-black border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-500"
-      />
-    </div>
+    <input
+      type="tel"
+      name="tel"
+      autoComplete="tel"
+      placeholder="📱 Mobile Number"
+      value={mobile}
+      onChange={(e) => dispatch(setMobile(e.target.value))}
+        className="w-full p-3 rounded-xl bg-white/10 text-black placeholder-white/70 border border-white/30 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-white/50 transition"
+    />
 
-    {/* Terms Checkbox */}
+    {/* Terms */}
     <label className="flex items-center text-sm text-white/90 space-x-2">
       <input
         type="checkbox"
@@ -181,20 +170,19 @@ const Signup = () => {
       </span>
     </label>
 
-    {/* Submit Button */}
+    {/* Button */}
     <button
       type="submit"
       disabled={!agreedToTerms || isLoading}
       className={`w-full py-3 font-semibold rounded-xl ${
         !agreedToTerms || isLoading
-          ? "bg-white text-black cursor-not-allowed"
+          ? "bg-white/70 text-black cursor-not-allowed"
           : "bg-gradient-to-r from-purple-600 to-pink-600 hover:brightness-110 shadow-lg transition-all duration-300"
       }`}
     >
       {isLoading ? <ClipLoader color="#000" size={20} /> : "Signup"}
     </button>
 
-    
     <p className="text-center text-sm text-white/90 mt-3">
       Already a member?{" "}
       <Link to="/create-resume" className="underline hover:text-white transition">
@@ -203,6 +191,7 @@ const Signup = () => {
     </p>
   </form>
 </div>
+
 
   );
 };

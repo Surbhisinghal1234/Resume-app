@@ -47,7 +47,7 @@ const Login = () => {
   return (
  
 
- <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#7e5bef] via-[#fb66c9] to-[#4f46e5] px-4 py-10">
+ <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#7e5bef] to-[#fb66c9] px-4 py-10">
   <form
     onSubmit={handleLogin}
     autoComplete="on"
@@ -57,33 +57,30 @@ const Login = () => {
     <p className="text-center text-sm text-white/80">Login to continue building your resume</p>
 
     {/* Email */}
-    <div>
-      <label className="text-sm text-white/80 mb-1 block">Email</label>
-      <input
-        type="email"
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-        autoComplete="email"
-        placeholder="abc@gmail.com"
-        className="w-full px-4 py-3 rounded-xl bg-white/90 text-black border border-gray-300 shadow-inner focus:outline-none focus:ring-2 focus:ring-purple-500 transition"
-      />
-    </div>
+    <input
+      type="email"
+      value={input}
+      name="email"
+      onChange={(e) => setInput(e.target.value)}
+      autoComplete="email"
+      placeholder="📧 Email Address"
+      className="w-full px-4 py-3 rounded-xl bg-white/10 text-white placeholder-white/70 border border-white/30 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-white/50 transition"
+    />
 
     {/* Password */}
     <div className="relative">
-      <label className="text-sm text-white/80 mb-1 block">Password</label>
       <input
         type={showPassword ? "text" : "password"}
         value={password}
         onChange={(e) => setPassword(e.target.value)}
         autoComplete="current-password"
-        placeholder="••••••••"
-        className="w-full px-4 py-3 rounded-xl bg-white/90 text-black border border-gray-300 shadow-inner focus:outline-none focus:ring-2 focus:ring-purple-500 transition"
+        placeholder="🔒 Password"
+        className="w-full px-4 py-3 rounded-xl bg-white/10 text-white placeholder-white/70 border border-white/30 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-white/50 transition"
       />
       <button
         type="button"
         onClick={() => setShowPassword(!showPassword)}
-        className="absolute right-4 bottom-3 text-gray-600"
+        className="absolute right-4 bottom-3 text-white/70"
       >
         {showPassword ? <FaEye /> : <FaEyeSlash />}
       </button>
@@ -116,6 +113,7 @@ const Login = () => {
     </p>
   </form>
 </div>
+
 
 
   );
