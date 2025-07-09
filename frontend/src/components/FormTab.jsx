@@ -135,22 +135,32 @@ const FormTab = () => {
         className="w-full lg:w-1/2 space-y-6 border-r pr-4"
       >
         {/* Step Navigation Buttons */}
-        <div className="flex flex-wrap  gap-2 bg-purple-100 p-3 rounded-xl">
-          {steps.map((label, index) => (
-            <button
-              key={index}
-              type="button"
-              onClick={() => dispatch(setStep(index + 1))}
-              className={`px-4 py-2 rounded text-sm transition-all duration-200 ${
-                step === index + 1
-                  ? "bg-purple-600 text-white"
-                  : "bg-white text-purple-600 border border-purple-600"
-              }`}
-            >
-              {index + 1}. {label}
-            </button>
-          ))}
-        </div>
+        
+
+<div className="flex flex-wrap gap-3 bg-purple-50 p-4 rounded-2xl shadow-sm border border-purple-200">
+  {steps.map((label, index) => {
+    const isActive = step === index + 1;
+    return (
+      <button
+        key={index}
+        type="button"
+        onClick={() => dispatch(setStep(index + 1))}
+        className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all duration-200
+          ${isActive
+            ? "bg-purple-600 text-white shadow-md"
+            : "bg-white text-purple-600 border border-purple-400 hover:bg-purple-100"}
+        `}
+      >
+        <span className={`w-6 h-6 flex items-center justify-center rounded-full font-bold
+          ${isActive ? "bg-white text-purple-600" : "bg-purple-100 text-purple-700 border border-purple-300"}
+        `}>
+          {index + 1}
+        </span>
+        {label}
+      </button>
+    );
+  })}
+</div>
 
         {/* Current Form Step */}
         {renderStep()}
@@ -197,7 +207,7 @@ const FormTab = () => {
           </button>
         </div>
 
-        <div ref={componentRef} className=" rounded-lg shadow-md p-4 bg-white">
+        <div ref={componentRef} className=" rounded-lg  bg-white">
           {renderThemePreview()}
         </div>
       </div>

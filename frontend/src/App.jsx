@@ -1,10 +1,10 @@
 import "./App.css";
-import Signup from "./components/Signup";
+import Signup from "./pages/Signup";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setUserFromStorage } from "./features/auth/authSlice";
 import { useEffect } from "react";
-import Login from "./components/Login";
+import Login from "./pages/Login";
 
 import ForgotPassword from "./components/ForgotPassword";
 import ResetPassword from "./components/ResetPassword";

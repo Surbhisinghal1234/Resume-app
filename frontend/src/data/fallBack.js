@@ -33,5 +33,12 @@ export const fallback = {
       year: "2021",
     },
   ],
-  certifications: ["React Developer Certificate", "JavaScript Mastery"],
+ certifications: [
+  {
+    title: "React Developer Certificate",
+    authority: "Meta (Coursera)",
+    year: "2023",
+  }
+  
+]
 };

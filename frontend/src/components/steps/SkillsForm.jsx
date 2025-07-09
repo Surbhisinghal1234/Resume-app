@@ -79,41 +79,43 @@ const SkillsForm = () => {
   );
 
   return (
-    <div className="space-y-6">
-      <h2 className="text-xl font-semibold">Skills</h2>
 
-      {/* Technical Skills */}
-      <div>
-        <h3 className="font-medium">Technical Skills</h3>
-        {renderTags("technical")}
-        <input
-          type="text"
-          placeholder="Type and press Enter"
-          value={inputValues.technical}
-          onChange={(e) => handleInputChange("technical", e.target.value)}
-          onKeyDown={(e) => handleKeyDown(e, "technical")}
-          className="w-full px-4 py-3 rounded-xl border-[2px] border-gray-300 shadow-md outline-none 
-            transition-all duration-200 
-            focus:border-[2px] focus:border-purple-500  focus:outline-[1.5px] focus:outline-black"
-        />
-      </div>
+    <>
+    <div className="space-y-8 bg-white/30 backdrop-blur-md p-6 rounded-2xl shadow-lg border border-purple-200">
+  <h2 className="text-2xl font-bold text-purple-700 border-b pb-2">💼 Skills</h2>
 
-      {/* Soft Skills */}
-      <div>
-        <h3 className="font-medium">Soft Skills</h3>
-        {renderTags("soft")}
-        <input
-          type="text"
-          placeholder="Type and press Enter"
-          value={inputValues.soft}
-          onChange={(e) => handleInputChange("soft", e.target.value)}
-          onKeyDown={(e) => handleKeyDown(e, "soft")}
-          className="w-full px-4 py-3 rounded-xl border-[2px] border-gray-300 shadow-md outline-none 
-            transition-all duration-200 
-            focus:border-[2px] focus:border-purple-500  focus:outline-[1.5px] focus:outline-black"
-        />
-      </div>
-    </div>
+  {/* Technical Skills */}
+  <div>
+    <h3 className="font-medium text-lg text-purple-600 mb-1">🛠️ Technical Skills</h3>
+    {renderTags("technical")}
+    <input
+      type="text"
+      placeholder="e.g. HTML, CSS, React..."
+      value={inputValues.technical}
+      onChange={(e) => handleInputChange("technical", e.target.value)}
+      onKeyDown={(e) => handleKeyDown(e, "technical")}
+      className="w-full mt-2 px-4 py-3 rounded-xl border border-gray-300 bg-white/80 backdrop-blur-sm shadow-sm
+        focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-purple-500 transition-all duration-200"
+    />
+  </div>
+
+  {/* Soft Skills */}
+  <div>
+    <h3 className="font-medium text-lg text-purple-600 mb-1">🤝 Soft Skills</h3>
+    {renderTags("soft")}
+    <input
+      type="text"
+      placeholder="e.g. Communication, Leadership..."
+      value={inputValues.soft}
+      onChange={(e) => handleInputChange("soft", e.target.value)}
+      onKeyDown={(e) => handleKeyDown(e, "soft")}
+      className="w-full mt-2 px-4 py-3 rounded-xl border border-gray-300 bg-white/80 backdrop-blur-sm shadow-sm
+        focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-purple-500 transition-all duration-200"
+    />
+  </div>
+</div>
+
+    </>
   );
 };
 

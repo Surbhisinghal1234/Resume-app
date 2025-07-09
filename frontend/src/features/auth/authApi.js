@@ -5,7 +5,8 @@ export const authApi = createApi({
 
   baseQuery: fetchBaseQuery({
     // baseUrl: 'http://localhost:5000/api',
-    baseUrl: 'https://resume-app-mzu8.onrender.com/api',
+    // baseUrl: 'https://resume-app-mzu8.onrender.com/api',
+    baseUrl: import.meta.env.VITE_API_URL,
 
     prepareHeaders: (headers) => {
       const token = localStorage.getItem("token");

@@ -29,104 +29,102 @@ const Theme4 = () => {
 
 
   return (
-    <div className="w-[800px]  border-[2px] border-gray-300 shadow-md  min-h-fit bg-white rounded-md font-sans text-gray-800 space-y-8">
+   <div className="
+  w-full max-w-[800px] mx-auto 
+  bg-white rounded-md font-sans text-gray-800 space-y-8 
+  print:w-[800px] print:shadow-none print:border-none
+">
      
-      <div className="bg-gray-800 text-white rounded-t-md p-6 shadow">
-        <h1 className="text-4xl font-bold uppercase">
-          {basicInfo?.name } 
-        </h1>
-        <h2 className="text-xl text-pink-600 font-medium">
-          {basicInfo?.designation}
-        </h2>
+     {/* Header */}
+  <div className="bg-gray-800 text-white rounded-t-md p-4 sm:p-6 shadow">
+    <h1 className="text-2xl sm:text-4xl font-bold uppercase">
+      {basicInfo?.name}
+    </h1>
+    <h2 className="text-lg sm:text-xl text-pink-600 font-medium">
+      {basicInfo?.designation}
+    </h2>
+    <div className="text-sm mt-2 break-words">
+      {basicInfo.email} &nbsp; | &nbsp; {basicInfo.mobile} &nbsp; | &nbsp; {basicInfo.email}
+    </div>
+  </div>
 
-        <div className="text-sm mt-2" >{basicInfo.email} &nbsp; | &nbsp; {basicInfo.mobile} &nbsp; | &nbsp; {basicInfo.email}</div>
-      </div>
-
-      <div className="bg-white shadow p-6">
-        {/* Summary */}
-        <div className="border-b pb-4 mb-4">
-          <h2 className="text-lg font-bold mb-2 text-gray-900 uppercase">
-            Professional Summary
-          </h2>
-         <p> {summary} </p>
-        </div>
+        {/* Content */}
+  <div className="px-4 sm:px-6 py-4">
+    {/* Summary */}
+    <div className="border-b pb-4 mb-4">
+      <h2 className="text-lg font-bold mb-2 text-gray-900 uppercase">
+        Professional Summary
+      </h2>
+      <p>{summary}</p>
+    </div>
 
 
          {/* Experience */}
-        <div className="border-b pb-4 mb-4">
-          <h2 className="text-lg font-bold mb-2 text-gray-900 uppercase">
-            Professional Experience
-          </h2>
-       {workExperience.map((exp, index) => (
-            <div key={index} className="mt-4">
-              <h4 className="font-bold">{exp.position}</h4>
-              <p className="text-sm text-gray-600">
-                {exp.company} • {exp.startDate} -{" "}
-                {exp.currentlyWorking ? "Present" : exp.endDate}
-              </p>
-              <p className="text-sm mt-1 whitespace-pre-line">
-                {exp.description}
-              </p>
-            </div>
-          ))}
+    <div className="border-b pb-4 mb-4">
+      <h2 className="text-lg font-bold mb-2 text-gray-900 uppercase">
+        Professional Experience
+      </h2>
+      {workExperience.map((exp, index) => (
+        <div key={index} className="mt-4">
+          <h4 className="font-bold">{exp.position}</h4>
+          <p className="text-sm text-gray-600">
+            {exp.company} • {exp.startDate} - {exp.currentlyWorking ? "Present" : exp.endDate}
+          </p>
+          <p className="text-sm mt-1 whitespace-pre-line">{exp.description}</p>
         </div>
+      ))}
+    </div>
 
-      <div className="grid grid-cols-3 gap-6 border-b pb-6">
-             
-   
-       <div>
-          <h3 className="text-base font-semibold uppercase tracking-wide mb-1">
-            Skills
-          </h3>
-          <ul className="list-disc list-inside text-sm space-y-1">
-            {skills.technical.map((skill, i) => (
-              <li key={i}>{skill}</li>
-            ))}
-          </ul>
-        </div>
-
-        <div>
-          <h3 className="text-base font-semibold uppercase tracking-wide mb-1">
-            Languages
-          </h3>
-          <ul className="list-disc list-inside text-sm space-y-1">
-            {others.languages.map((lang, i) => (
-              <li key={i}>{lang}</li>
-            ))}
-          </ul>
-        </div>
-        </div>
-
-      <div className=" bg-[#ffffff]  space-y-8">
-       
-       
-
-        <div>
-          <h3 className="text-lg font-semibold uppercase text-[#2f3542] border-b border-gray-200 pb-1">
-            Education
-          </h3>
-          {education.map((edu, index) => (
-            <div key={index} className="mt-2">
-              <p className="font-bold text-sm">{edu.degree}</p>
-              <p className="text-sm text-gray-600">{edu.institution}</p>
-              <p className="text-xs text-[#ff6b6b] italic">{edu.year}</p>
-            </div>
-          ))}
-        </div>
-
-        <div>
-          <h3 className="text-lg font-semibold uppercase text-[#2f3542] border-b border-gray-200 pb-1">
-            Certifications
-          </h3>
-          <ul className="list-disc list-inside mt-2 space-y-1 text-sm">
-            {certifications.map((cert, i) => (
-              <li key={i}>{cert}</li>
-            ))}
-          </ul>
-        </div>
+    {/* Skills + Languages Grid */}
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 border-b pb-6">
+      <div>
+        <h3 className="text-base font-semibold uppercase tracking-wide mb-1">Skills</h3>
+        <ul className="list-disc list-inside text-sm space-y-1">
+          {skills.technical.map((skill, i) => <li key={i}>{skill}</li>)}
+        </ul>
+      </div>
+      <div>
+        <h3 className="text-base font-semibold uppercase tracking-wide mb-1">Languages</h3>
+        <ul className="list-disc list-inside text-sm space-y-1">
+          {others.languages.map((lang, i) => <li key={i}>{lang}</li>)}
+        </ul>
       </div>
     </div>
+
+      
+       
+       
+ {/* Education */}
+    <div className="space-y-6 mt-6">
+      <div>
+        <h3 className="text-lg font-semibold uppercase text-[#2f3542] border-b border-gray-200 pb-1">Education</h3>
+        {education.map((edu, index) => (
+          <div key={index} className="mt-2">
+            <p className="font-bold text-sm">{edu.degree}</p>
+            <p className="text-sm text-gray-600">{edu.institution}</p>
+            <p className="text-xs text-[#ff6b6b] italic">{edu.year}</p>
+          </div>
+        ))}
+      </div>
+
+      {/* Certifications */}
+     <div>
+  <h3 className="text-lg font-semibold uppercase text-[#2f3542] border-b border-gray-200 pb-1">
+    Certifications
+  </h3>
+  <ul className="mt-2 space-y-2 text-sm list-disc list-inside">
+    {certifications.map((cert, i) => (
+      <li key={i}>
+        <span className="font-medium">{cert.title}</span>
+        <span className="text-gray-600"> — {cert.authority}</span>
+        <span className="text-purple-600 italic ml-1">({cert.year})</span>
+      </li>
+    ))}
+  </ul>
+</div>
     </div>
+  </div>
+</div>
 
   );
 };

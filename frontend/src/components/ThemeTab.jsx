@@ -24,16 +24,16 @@ useEffect(() => {
   };
 
   return (
-    <div className="flex gap-2">
+    <div className="flex flex-col md:flex-row gap-6">
       {/* Left: Theme options */}
-      <div className=" flex gap-4 flex-col space-y-4">
+      <div className=" md:w-1/2">
         <h2 className=" text-xl font-bold mb-2">Choose a Theme</h2>
-        <div className="flex gap-4 flex-wrap" >
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4" >
 
         {themes.map((theme) => (
           <div
             key={theme.id}
-            className={`border rounded p-2 cursor-pointer object-cover h-[20rem] w-[20rem] ${
+            className={`border rounded p-2 cursor-pointer object-cover  ${
               selected === theme.id ? "border-blue-600" : "border-gray-300"
             }`}
             onClick={() => handleSelect(theme.id)}
@@ -41,7 +41,7 @@ useEffect(() => {
             <img
               src={theme.img}
               alt={theme.label}
-              className="w-full h-32 object-cover rounded"
+              className="w-full aspect-video object-cover rounded"
             />
             <p className="text-center mt-2 font-medium">{theme.label}</p>
           </div>
@@ -51,7 +51,7 @@ useEffect(() => {
       </div>
 
       {/* Right: Preview */}
-      <div className="">
+      <div className="md:w-1/2 mt-4 md:mt-0">
         {selected ? (
           <ThemePreview theme={selected} />
         ) : (
@@ -61,6 +61,8 @@ useEffect(() => {
         )}
       </div>
     </div>
+
+    
   );
 };
 
