@@ -12,6 +12,9 @@ const resumeSchema = new mongoose.Schema({
     email: String,
     mobile: String,
     location: String,
+    linkedin: String,
+  github: String,
+  designation: String, // Added for job title or designation
   },
   workExperience: [
     {
@@ -28,6 +31,7 @@ const resumeSchema = new mongoose.Schema({
       degree: String,
       institution: String,
       year: String,
+      gradeOrPercentage: String,
     }
   ],
   certification: [

@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   step: 1,
   selectedTheme: null,
-  resumeList: [], 
+  resumeList: [],
   currentResume: {
     id: null,
     basicInfo: {
@@ -11,6 +11,11 @@ const initialState = {
       email: "",
       mobile: "",
       location: "",
+      designation:"",
+    
+        
+      linkedin: "",
+      github: "",
     },
     workExperience: [
       {
@@ -27,6 +32,7 @@ const initialState = {
         degree: "",
         institution: "",
         year: "",
+        gradeOrPercentage: "",
       },
     ],
     certification: [
@@ -74,9 +80,9 @@ const resumeSlice = createSlice({
     setTheme(state, action) {
       state.selectedTheme = action.payload;
     },
-setIsEdit: (state, action) => {
-  state.isEdit = action.payload;
-},
+    setIsEdit: (state, action) => {
+      state.isEdit = action.payload;
+    },
     //  Add new resume to list
     addResume(state, action) {
       const newResume = {
@@ -110,9 +116,7 @@ setIsEdit: (state, action) => {
     // Update an existing resume
     updateResume(state, action) {
       const updated = action.payload;
-      const index = state.resumeList.findIndex(
-        (r) => r.id === updated.id
-      );
+      const index = state.resumeList.findIndex((r) => r.id === updated.id);
       if (index !== -1) {
         state.resumeList[index] = {
           ...updated,
@@ -156,7 +160,7 @@ export const {
   deleteResume,
   loadResumeForEdit,
   resetForm,
-  setIsEdit
+  setIsEdit,
 } = resumeSlice.actions;
 
 export default resumeSlice.reducer;

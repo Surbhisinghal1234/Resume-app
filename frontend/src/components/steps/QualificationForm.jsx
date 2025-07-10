@@ -101,8 +101,8 @@ const QualificationForm = () => {
           <input
             type="text"
             placeholder="📊 Grade / Percentage"
-            value={edu.grade}
-            onChange={(e) => handleChange(index, "grade", e.target.value)}
+            value={edu.gradeOrPercentage}
+            onChange={(e) => handleChange(index, "gradeOrPercentage", e.target.value)}
             className="w-full px-4 py-3 rounded-xl border border-gray-300 bg-white/80 backdrop-blur-sm shadow-sm
             focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-purple-500 transition-all duration-200"
           />

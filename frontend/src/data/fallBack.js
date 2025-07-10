@@ -5,6 +5,8 @@ export const fallback = {
     mobile: "9876543210",
     location: "New Delhi, India",
     designation: "Frontend Developer",
+    linkedin: "https://www.linkedin.com/in/surbhi-singhal", // 🔗 Add your actual link
+    github: "https://github.com/surbhisinghal",  
   },
   skills: {
     technical: ["React", "JavaScript", "HTML", "CSS"],
@@ -26,14 +28,15 @@ export const fallback = {
         "Worked on building scalable frontend applications using React.\nCollaborated with cross-functional teams.",
     },
   ],
-  education: [
+  qualification: [
     {
       degree: "B.Tech in Computer Science",
       institution: "ABC Institute of Technology",
       year: "2021",
+      gradeOrPercentage: "CGPA: 8.5",
     },
   ],
- certifications: [
+ certification: [
   {
     title: "React Developer Certificate",
     authority: "Meta (Coursera)",
