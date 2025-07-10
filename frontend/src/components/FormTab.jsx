@@ -177,7 +177,7 @@ const FormTab = () => {
             </button>
           )}
 
-          {step < 6 ? (
+          {step < 7 ? (
             <button
               type="button"
               onClick={() => dispatch(nextStep())}

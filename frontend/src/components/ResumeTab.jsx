@@ -146,8 +146,8 @@ const ResumeTab = () => {
                 <p><strong>Degree:</strong> {q.degree}</p>
                 <p><strong>Institution:</strong> {q.institution}</p>
                 <p><strong>Year:</strong> {q.year}</p>
-                <p><strong>Year:</strong> {q.year}</p>
-                <p><strong>Year:</strong> {q.gradeOrPercentage}</p>
+               
+                <p><strong>Percentage/Grade</strong> {q.gradeOrPercentage}</p>
 
 
               </div>

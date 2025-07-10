@@ -11,9 +11,7 @@ const initialState = {
       email: "",
       mobile: "",
       location: "",
-      designation:"",
-    
-        
+      designation: "",
       linkedin: "",
       github: "",
     },
@@ -61,7 +59,7 @@ const resumeSlice = createSlice({
   reducers: {
     // Step control
     nextStep(state) {
-      if (state.step < 6) state.step++;
+      if (state.step < 7) state.step++;
     },
     prevStep(state) {
       if (state.step > 1) state.step--;

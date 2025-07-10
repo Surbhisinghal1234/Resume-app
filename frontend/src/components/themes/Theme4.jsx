@@ -47,7 +47,7 @@ const Theme4 = () => {
       {basicInfo?.designation}
     </h2>
     <div className="text-sm mt-2 break-words">
-      {basicInfo.email} &nbsp; | &nbsp; {basicInfo.mobile} &nbsp; | &nbsp; {basicInfo.email}
+      {basicInfo.email} &nbsp; | &nbsp; {basicInfo.mobile} &nbsp; | &nbsp; {basicInfo.location}
     </div>
         {basicInfo.linkedin && (
   <div className="flex gap-2">
